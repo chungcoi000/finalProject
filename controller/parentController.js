@@ -76,3 +76,5 @@ async function deleteParents(req, res) {
         console.log(e);
     }
 }
+
+module.exports = {deleteParents,updateParents,viewUpdateParents, createParents, viewParents}

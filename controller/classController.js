@@ -73,3 +73,4 @@ async function deleteclass(req, res) {
         console.log(e);
     }
 }
+module.exports = { deleteclass, updateclass, viewUpdateclass, createclass, viewclass }

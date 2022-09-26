@@ -28,7 +28,7 @@ async function createRole(req, res) {
     }
 }
 
-async function viewUpdateRole(req, res) {
+async function viewRoles(req, res) {
     try {
         let Role = await RoleModel.findOne({ id: req.params.id });
         if (Role) {
@@ -71,3 +71,5 @@ async function deleteRole(req, res) {
         console.log(e);
     }
 }
+
+module.exports = { deleteRole, updateRole, viewRoles, createRole, viewRole }

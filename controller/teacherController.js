@@ -77,3 +77,5 @@ async function deleteTeacher(req, res) {
         console.log(e);
     }
 }
+
+module.exports = { deleteTeacher, updateTeacher, viewUpdateTeacher, createTeacher, viewTeachers }

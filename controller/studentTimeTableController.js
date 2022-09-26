@@ -73,3 +73,5 @@ async function deleteStudentTimeTable(req, res) {
         console.log(e);
     }
 }
+
+module.exports = { deleteStudentTimeTable, updateStudentTimeTable, viewUpdateStudentTimeTable, createStudentTimeTable, viewStudentTimeTable }

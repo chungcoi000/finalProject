@@ -1,11 +1,12 @@
 const router = require('express').Router();
+const { deleteStudentTimeTable, updateStudentTimeTable, viewUpdateStudentTimeTable, createStudentTimeTable, viewStudentTimeTable } = require('../controller/studentTimeTableController')
 
 router.get('/viewStudentTimeTable', viewStudentTimeTable)
 router.post('/createTeacer', createStudentTimeTable)
 
-router.get('/viewUpdateStudentTimeTable/:id', viewUpdateStudentTimeTable)
-router.post('/updateStudentTimeTable/:id', updateStudentTimeTable)
+router.get('/viewUpdateStudentTimeTable/:slug', viewUpdateStudentTimeTable)
+router.post('/updateStudentTimeTable/:slug', updateStudentTimeTable)
 
-router.delete('/deleteStudentTimeTable/:id', deleteStudentTimeTable)
+router.delete('/deleteStudentTimeTable/:slug', deleteStudentTimeTable)
 
 module.exports = router

@@ -3,7 +3,7 @@ const mongoose = require('./connectDB');
 const UserSchema = mongoose.Schema({
     // avatar: String,
     name: String,
-    dob: date,
+    dob: Date,
     role: { type: String, ref: 'role' },
     class: { type: String, ref: 'class' },
     child: { type: String, ref: 'user' },

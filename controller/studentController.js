@@ -77,3 +77,5 @@ async function deleteStudents(req, res) {
         console.log(e);
     }
 }
+
+module.exports = { deleteStudents, updateStudents, viewUpdateStudents, createStudents, viewStudents }

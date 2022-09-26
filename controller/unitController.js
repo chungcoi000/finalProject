@@ -71,3 +71,5 @@ async function deleteUnit(req, res) {
         console.log(e);
     }
 }
+
+module.exports = { viewUnit, createUnit, viewUpdateUnit, updateUnit, deleteUnit }
