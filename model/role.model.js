@@ -1,7 +1,7 @@
 const mongoose = require('./connectDB');
 
 const RoleSchema = mongoose.Schema({
-    name: String,
+    name: { type: 'string', enum: ['teacher', 'student', 'parent', 'admin'], default: 'student' },
     slug: String,
 }, { collection: "role", timestamps: true })
 

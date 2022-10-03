@@ -1,4 +1,3 @@
-const router = require('express').Router();
 const UnitModel = require('../model/unit.model');
 const slug = require('slugify');
 

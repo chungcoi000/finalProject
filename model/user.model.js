@@ -2,6 +2,7 @@ const mongoose = require('./connectDB');
 
 const UserSchema = mongoose.Schema({
     // avatar: String,
+    email: String,
     name: String,
     dob: Date,
     role: { type: String, ref: 'role' },
@@ -10,7 +11,9 @@ const UserSchema = mongoose.Schema({
     phone: Number,
     subject: { type: String, ref: 'subject' },
     gender: { type: String, enum: ['male', 'female'], default: 'male' },
-    avatar: { type: String, default: 'public/static/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg' }
+    avatar: { type: String, default: 'public/static/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg' },
+    tokken: String,
+    password: String
 }, { collection: "user", timestamps: true })
 
 const UserModel = mongoose.model('user', UserSchema);

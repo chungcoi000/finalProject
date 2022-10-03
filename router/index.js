@@ -19,11 +19,16 @@ router.use('/class', classRouter)
 const unitRouter = require("./unitRouter")
 router.use('/user', unitRouter)
 
-const studentTimeTableRouter = require("./studentTimeTableRouter")
-router.use('/studentTimeTable', studentTimeTableRouter)
+const class_slotRouter = require("./class_slotRouter")
+router.use('/class_slot', class_slotRouter)
 
-const teacherTimeTableRouter = require("./teacherTimeTableRoter")
-router.use('/teacherTimeTable', teacherTimeTableRouter)
+const ProfileRouter = require("./profileRouter")
+router.use('/profile', ProfileRouter)
+
+const timeTableRouter = require("./timetableRouter")
+router.use('/timeTable', timeTableRouter)
 
 
+const authRouter = require("./authRouter")
+router.use('/', authRouter)
 module.exports = router;

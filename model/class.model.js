@@ -4,7 +4,8 @@ const ClassSchema = mongoose.Schema({
     name: String,
     unitID: { type: String, ref: 'unit' },
     fromTeacher: { type: String, ref: 'user' },
-    slug: String
+    student: [{ type: String, ref: 'student' }],
+    slug: String,
 }, { collection: 'class', timestamps: true })
 
 const ClassModel = mongoose.model('class', ClassSchema);

@@ -12,6 +12,7 @@ async function viewStudents(req, res) {
     }
 }
 
+
 async function createStudents(req, res) {
     try {
         let Students = await UserModel.findOne({ phone: req.body.phone })
