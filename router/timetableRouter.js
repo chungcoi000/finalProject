@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { createTimeTable, timeTableStudent, slotStudent, timeTableTeacherH, timeTableTeacher } = require('../controller/timeTableController')
+const { createTimeTable, timeTableStudent, slotStudent, timeTableTeacher, timeTableTeacherH } = require('../controller/timeTableController')
 
 
-router.post('/createTimeTable', createTimeTable)
-router.get('/timeTableStudent', timeTableStudent)
-router.get('/slotStudent', slotStudent)
-router.get('/timeTableTeacherH', timeTableTeacherH)
-router.get('/timeTableTeacher', timeTableTeacher)
+router.post('/create-timetable', createTimeTable)
+router.get('/student-timetable', timeTableStudent)
+router.get('/slot-student', slotStudent)
+router.get('/teacher-timetables', timeTableTeacherH)
+router.get('/teacher-timetable', timeTableTeacher)
 
 module.exports = router

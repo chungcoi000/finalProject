@@ -1,12 +1,12 @@
 const router = require('express').Router();
-const { viewUnit, createUnit, viewUpdateUnit, updateUnit, deleteUnit } = require('../controller/unitController')
+const { viewUnit, createUnit, updateUnit, deleteUnit, viewUnits} = require('../controller/unitController')
 
-router.get('/viewunit', viewUnit)
-router.post('/createTeacer', createUnit)
+router.get('/view-units', viewUnits)
+router.post('/create-unit', createUnit)
 
-router.get('/viewUpdateunit/:slug', viewUpdateUnit)
-router.post('/updateunit/:slug', updateUnit)
+router.get('/view-unit/:slug', viewUnit)
+router.post('/update-unit/:slug', updateUnit)
 
-router.delete('/deleteunit/:slug', deleteUnit)
+router.delete('/delete-unit/:slug', deleteUnit)
 
 module.exports = router

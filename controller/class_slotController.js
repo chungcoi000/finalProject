@@ -24,7 +24,7 @@ async function createClass_slot(req, res) {
 }
 
 
-async function viewClass_Slot(req, res) {
+async function viewClass_Slots(req, res) {
     try {
         let Class_Slots = await Class_slotModel.find()
         res.json({ status: 200, Class_Slots: Class_Slots })
@@ -64,5 +64,5 @@ async function deleteClass_Slot(req, res) {
 }
 
 
-module.exports = { deleteClass_Slot, updateClass_Slot, viewClass_Slot, createClass_slot }
+module.exports = { deleteClass_Slot, updateClass_Slot, viewClass_Slots, createClass_slot }
 

@@ -12,7 +12,7 @@ const UserSchema = mongoose.Schema({
     subject: { type: String, ref: 'subject' },
     gender: { type: String, enum: ['male', 'female'], default: 'male' },
     avatar: { type: String, default: 'public/static/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg' },
-    tokken: String,
+    token: String,
     password: String
 }, { collection: "user", timestamps: true })
 

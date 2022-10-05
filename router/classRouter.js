@@ -1,12 +1,10 @@
 const router = require('express').Router();
-const { deleteclass, updateclass, viewUpdateclass, createclass, viewclass } = require('../controller/classController')
+const {deleteClass, getClass, getClasses, addClass, updateClass} = require('../controller/classController')
 
-router.get('/viewclass', viewclass)
-router.post('/createclass', createclass)
-
-router.get('/viewUpdateclass/:slug', viewUpdateclass)
-router.post('/updateclass/:slug', updateclass)
-
-router.delete('/deleteclass/:slug', deleteclass)
+router.get('/', getClasses);
+router.post('/add', addClass);
+router.get('/:slug', getClass);
+router.post('/update/:slug', updateClass);
+router.delete('/delete/:slug', deleteClass);
 
 module.exports = router

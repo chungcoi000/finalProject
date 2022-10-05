@@ -50,11 +50,11 @@ async function updateParents(req, res) {
     try {
         let Parents = await UserModel.findOne({ id: req.params.id })
         if (Parents) {
-            let newParents = await UserModel.UpdateOne({
+            let newParents = await UserModel.updateOne({
                 phone: req.body.phone,
                 class: req.body.class,
             })
-            res.json({ status: 200, data: newParents })
+            res.json({ status: 200, message: "Update parent successful",data: newParents })
         } else {
             res.json({ status: 404, message: "Parents not found" });
         }
@@ -68,7 +68,7 @@ async function deleteParents(req, res) {
         let Parents = await UserModel.findOne({ id: req.params.id })
         if (Parents) {
             let deleteParents = await UserModel.deleteOne({ _id: Parents._id })
-            res.json({ statusbar: 200, message: ' delete successfully' })
+            res.json({ statusbar: 200, message: ' Delete parent successful', data: deleteParents })
         } else {
             res.json({ status: 404, message: "Parents not found" })
         }

@@ -1,12 +1,12 @@
 const router = require('express').Router();
-const { deleteStudents, updateStudents, viewUpdateStudents, createStudents, viewStudents } = require('../controller/studentController')
+const { deleteStudents, updateStudent, viewStudent, createStudents, viewStudents } = require('../controller/studentController')
 
-router.get('/viewStudents', viewStudents)
-router.post('/createStudents', createStudents)
+router.get('/', viewStudents)
+router.post('/add', createStudents)
 
-router.get('/viewUpdateStudents/:slug', viewUpdateStudents)
-router.post('/updateStudents/:slug', updateStudents)
+router.get('/:slug', viewStudent)
+router.post('/update/:slug', updateStudent)
 
-router.delete('/deleteStudents/:slug', deleteStudents)
+router.delete('/delete/:slug', deleteStudents)
 
 module.exports = router

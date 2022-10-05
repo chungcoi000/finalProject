@@ -28,8 +28,8 @@ async function createTimeTable(req, res) {
 
 async function timeTableStudent(req, res) {
     try {
-        let tokken = req.cookies;
-        let user = await UserModel.findOne({ tokken: tokken.user })
+        let token = req.cookies;
+        let user = await UserModel.findOne({ token: token.user })
         let classStudent = await ClassModel.findOne({ _id: user.class })
         if (classStudent) {
             let classSlot = await Class_slotModel.findOne({ classID: classStudent.id })
@@ -45,8 +45,8 @@ async function timeTableStudent(req, res) {
 
 async function slotStudent(req, res) {
     try {
-        let tokken = req.cookies;
-        let user = await UserModel.findOne({ tokken: tokken.user })
+        let token = req.cookies;
+        let user = await UserModel.findOne({ token: token.user })
         if (user.role === 'student') {
             let classStudent = await ClassModel.findOne({ _id: user.class })
             if (classStudent) {
@@ -72,9 +72,9 @@ async function slotStudent(req, res) {
 
 async function timeTableTeacherH(req, res) {
     try {
-        let tokken = req.cookies;
-        let user = await UserModel.findOne({ tokken: tokken.user })
-        let classStudent = await ClassModel.findOne({ fromTeacher: user.id })
+        let token = req.cookies;
+        let user = await UserModel.findOne({ token: token.user })
+        let classStudent = await ClassModel.findOne({ formTeacher: user.id })
         if (classStudent) {
             let classSlot = await Class_slotModel.findOne({ classID: classStudent.id })
             let timeTable = await timetableModel.findOne({ class_slotID: classSlot.id })

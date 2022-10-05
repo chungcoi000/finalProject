@@ -1,9 +1,6 @@
-const router = require('express').Router();
 const UserModel = require('../model/user.model');
 
-
-
-async function viewTeachers(req, res) {
+const getTeachers = async(req, res) => {
     try {
         let teacher = await UserModel.find()
         res.json({ status: 200, data: teacher })
@@ -12,13 +9,13 @@ async function viewTeachers(req, res) {
     }
 }
 
-async function createTeacher(req, res) {
+const addTeacher = async(req, res) => {
     try {
         let teacher = await UserModel.findOne({ phone: req.body.phone })
         if (teacher) {
-            res.json({ status: 400, message: 'Teacher da ton tai' })
+            res.json({ status: 400, message: 'Teacher is already existed!' })
         } else {
-            let teacer = await UserModel.create({
+            let teacher = await UserModel.create({
                 name: req.body.name,
                 dob: req.body.dob,
                 role: req.body.role,
@@ -27,14 +24,14 @@ async function createTeacher(req, res) {
                 subject: req.body.subject,
                 gender: req.body.gender,
             })
-            res.json({ status: 200, message: 'created successfully' })
+            res.json({ status: 200, message: 'Create teacher successful', data: teacher })
         }
     } catch (e) {
         console.log(e);
     }
 }
 
-async function viewUpdateTeacher(req, res) {
+const getTeacher = async (req, res) => {
     try {
         let teacher = await UserModel.findOne({ id: req.params.id });
         if (teacher) {
@@ -47,29 +44,30 @@ async function viewUpdateTeacher(req, res) {
     }
 }
 
-async function updateTeacher(req, res) {
+const updateTeacher = async(req, res) => {
     try {
         let teacher = await UserModel.findOne({ id: req.params.id })
         if (teacher) {
-            let newTeacher = await UserModel.UpdateOne({
+            let newTeacher = await UserModel.updateOne({
                 phone: req.body.phone,
                 class: req.body.class,
             })
-            res.json({ status: 200, data: newTeacher })
+            res.json({ status: 200, data: newTeacher, message: "Update teacher successful" })
         } else {
             res.json({ status: 404, message: "Teacher not found" });
         }
     } catch (e) {
         console.log(e);
+        res.json({ status: 404, message: "Something error" });
     }
 }
 
-async function deleteTeacher(req, res) {
+const deleteTeacher = async(req, res) => {
     try {
         let teacher = await UserModel.findOne({ id: req.params.id })
         if (teacher) {
             let deleteTeacher = await UserModel.deleteOne({ _id: teacher._id })
-            res.json({ statusbar: 200, message: ' delete successfully' })
+            res.json({ statusbar: 200, message: 'Delete teacher successful', data: deleteTeacher })
         } else {
             res.json({ status: 404, message: "Teacher not found" })
         }
@@ -78,4 +76,5 @@ async function deleteTeacher(req, res) {
     }
 }
 
-module.exports = { deleteTeacher, updateTeacher, viewUpdateTeacher, createTeacher, viewTeachers }
+
+module.exports = { deleteTeacher, updateTeacher, getTeachers, addTeacher, getTeacher }
