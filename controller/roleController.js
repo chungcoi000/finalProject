@@ -45,7 +45,7 @@ async function updateRole(req, res) {
     try {
         let Role = await RoleModel.findOne({ id: req.params.id })
         if (Role) {
-            let newRole = await RoleModel.UpdateOne({
+            let newRole = await RoleModel.updateOne({ _id: Role._id }, {
                 phone: req.body.phone,
                 class: req.body.class,
             })

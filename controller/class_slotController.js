@@ -38,7 +38,14 @@ async function updateClass_Slot(req, res) {
     try {
         let Class_Slot = await Class_slotModel.findOne({ slug: req.params.slug })
         if (Class_Slot) {
-            res.json({ status: 200, Class_Slot: Class_Slot })
+            let updateClass_Slot = Class_slotModel.updateOne({ _id: Class_Slot._id }, {
+                slotID: req.body.slotID,
+                classID: req.body.classID,
+                teacherID: req.body.teacherID,
+                subjectID: req.body.subjectID,
+                slug: slug(req.body.name)
+            })
+            res.json({ status: 200, Class_Slot: updateClass_Slot })
         } else {
             res.json({ status: 404, status: 'Not Found' })
         }
