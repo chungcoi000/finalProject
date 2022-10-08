@@ -87,11 +87,10 @@ async function timeTableTeacherH(req, res) {
   }
 }
 
-
 async function timeTableTeacher(req, res) {
   try {
-    let tokken = req.cookies;
-    let user = await UserModel.findOne({tokken: tokken.user})
+    let token = req.cookies;
+    let user = await UserModel.findOne({token: token.user})
     if (user) {
       let classSlot = await Class_slotModel.findOne({teacherID: user.id}).populate('classID')
       let timeTable = await timetableModel.findOne({class_slotID: classSlot.id})

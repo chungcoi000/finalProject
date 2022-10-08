@@ -25,10 +25,10 @@ async function login(req, res) {
         res.cookie("user", token, {
           expires: new Date(Date.now() + 9000000),
         });
-        let user = await UserModel.findOne({email: req.body.email})
+        let user = await UserModel.findOne({email: req.body.email});
         res.json({role: user.role})
       } else {
-        res.json({message: " incorrect password"});
+        res.json({message: " Incorrect password"});
       }
     } else {
       res.json({message: "login failed", status: 400, err: false});
@@ -47,7 +47,7 @@ async function register(req, res) {
     if (user) {
       res.json({
         status: 400,
-        message: 'email da ton tai',
+        message: 'Email is already existed',
       })
     } else {
       if (req.body.role === 'student') {
