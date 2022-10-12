@@ -14,6 +14,7 @@ async function createTimeTable(req, res) {
       await timetableModel.create({
         name: req.body.name,
         dateID: req.body.dateID,
+        slotID: req.body.slotID,
         class_slotID: req.body.class_slotID,
         slug: slug(req.body.name)
       })
@@ -53,7 +54,7 @@ async function slotStudent(req, res) {
         let classSlot = await Class_slotModel.findOne({classID: classStudent.id}).populate('slotID')
         res.json({status: 200, Message: 'Success', classSlot})
       } else {
-        res.json({status: 404, Message: 'classSlot  not found'})
+        res.json({status: 404, Message: 'classSlot not found'})
       }
     } else if (user.role === 'parent') {
       let student = await UserModel.findOne({_id: user.child})
@@ -62,7 +63,7 @@ async function slotStudent(req, res) {
         let classSlot = await Class_slotModel.findOne({classID: classStudent.id}).populate('slotID')
         res.json({status: 200, Message: 'Success', classSlot})
       } else {
-        res.json({status: 404, Message: 'classSlot  not found'})
+        res.json({status: 404, Message: 'classSlot not found'})
       }
     }
   } catch (e) {

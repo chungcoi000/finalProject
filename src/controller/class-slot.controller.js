@@ -8,12 +8,9 @@ async function createClassSlot(req, res) {
       res.json({status: 404, message: 'Class slot is already existed'})
     } else {
       let createClass_slot = Class_slotModel.create({
-        name: req.body.name,
-        slotID: req.body.slotID,
         classID: req.body.classID,
         teacherID: req.body.teacherID,
         subjectID: req.body.subjectID,
-        slug: slug(req.body.name)
       })
       res.json({status: 200, message: 'Create class slot successful', data: createClass_slot})
     }
@@ -48,9 +45,9 @@ async function updateClassSlot(req, res) {
   try {
     let Class_Slot = await Class_slotModel.findOne({slug: req.params.slug})
     if (Class_Slot) {
-      res.json({status: 200, Class_Slot: Class_Slot})
+      res.json({status: 200, Class_Slot: Class_Slot, message: "Update class slot successful!"})
     } else {
-      res.json({status: 404, status: 'Not Found'})
+      res.json({status: 404, message: 'Not Found', data: Class_Slot})
     }
   } catch (e) {
     res.json(e);
