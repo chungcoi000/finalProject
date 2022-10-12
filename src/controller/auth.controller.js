@@ -9,7 +9,6 @@ async function login(req, res) {
     const data = await UserModel.findOne({
       email: req.body.email,
     });
-
     if (data) {
       const checkPassword = await bcrypt.compare(
         req.body.password,
@@ -17,21 +16,21 @@ async function login(req, res) {
       );
       if (checkPassword) {
         const UserID = data._id;
-        const token = jwt.sign(`${UserID}`, "chung");
+        const token = jwt.sign(`${UserID}`, "token");
         await UserModel.updateOne(
-          {_id: data._id},
-          {token: token}
+          { _id: data._id },
+          { token: token }
         );
         res.cookie("user", token, {
           expires: new Date(Date.now() + 9000000),
         });
-        let user = await UserModel.findOne({email: req.body.email});
-        res.json({role: user.role})
+        let user = await UserModel.findOne({ email: req.body.email }).populate('role');
+        res.json({ role: user.role.name, date: data })
       } else {
-        res.json({message: " Incorrect password"});
+        res.json({ message: " Incorrect password" });
       }
     } else {
-      res.json({message: "login failed", status: 400, err: false});
+      res.json({ message: "login failed", status: 400, err: false });
     }
   } catch (err) {
     res.json(76, err);
@@ -42,7 +41,7 @@ async function login(req, res) {
 // register
 async function register(req, res) {
   try {
-    let user = await UserModel.findOne({email: req.body.email})
+    let user = await UserModel.findOne({ email: req.body.email })
     // console.log(user);
     if (user) {
       res.json({
@@ -61,7 +60,7 @@ async function register(req, res) {
           class: req.body.class,
           phone: req.body.phone,
           gender: req.body.gender,
-          role: "user",
+          role: "student",
         });
       } else if (req.body.role === 'teacher') {
         const password = await bcrypt.hash(req.body.password, 20);
@@ -75,7 +74,7 @@ async function register(req, res) {
           subject: req.body.subject,
           phone: req.body.phone,
           gender: req.body.gender,
-          role: "user",
+          role: "teacher",
         });
       } else {
         const password = await bcrypt.hash(req.body.password, 10);
@@ -103,4 +102,4 @@ async function register(req, res) {
   }
 }
 
-module.exports = {login, register}
+module.exports = { login, register }

@@ -1,15 +1,6 @@
 const router = require("express").Router();
 // router.get('/', home)
 
-const TeacherRouter = require("./teacher.route")
-router.use('/teachers', TeacherRouter)
-
-const StudentRouter = require("./student.route")
-router.use('/students', StudentRouter)
-
-const parentRouter = require("./parent.route")
-router.use('/parents', parentRouter)
-
 const RoleRouter = require("./role.route")
 router.use('/roles', RoleRouter)
 
