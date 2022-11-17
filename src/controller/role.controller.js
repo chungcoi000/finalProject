@@ -62,7 +62,7 @@ async function deleteRole(req, res) {
   try {
     let Role = await RoleModel.findOne({id: req.params.id})
     if (Role) {
-      let deleteRole = await RoleModel.deleteOne({_id: Role._id})
+      let deleteRole = await RoleModel.findOneAndDelete({_id: Role._id})
       res.json({statusbar: 200, message: 'Delete role successful', data: deleteRole});
     } else {
       res.json({status: 404, message: "Role not found"})

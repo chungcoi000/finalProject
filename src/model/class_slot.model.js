@@ -2,6 +2,7 @@ const mongoose = require('./connectDB')
 
 const class_slotSchema = mongoose.Schema({
   name: String,
+  date: Date,
   slotID: {type: String, ref: 'slot'},
   classID: {type: String, ref: 'class'},
   teacherID: {type: String, ref: 'user'},

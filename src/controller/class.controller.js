@@ -2,7 +2,7 @@ const router = require('express').Router();
 const ClassModel = require('../model/user.model');
 const slug = require('slugify');
 const UserModel = require('../model/user.model');
-
+const PostModel = require('../model/post.model');
 const getClasses = async (req, res) => {
     try {
         let classes = await ClassModel.find()
@@ -14,13 +14,14 @@ const getClasses = async (req, res) => {
 
 const addClass = async (req, res) => {
     try {
-        let classs = await ClassModel.findOne({ phone: req.body.phone })
+        let classs = await ClassModel.findOne({ name: req.body.name })
         if (classs) {
             res.json({ status: 400, message: 'Class is already existed' })
         } else {
             let Class = await ClassModel.create({
                 name: req.body.name,
                 unit: req.body.unit,
+                student: req.body.student,
                 fromTeacher: req.body.fromTeacher,
                 slug: slug(req.body.name)
             })
@@ -65,7 +66,7 @@ const deleteClass = async (req, res) => {
     try {
         let class1 = await ClassModel.findOne({ id: req.params.id })
         if (class1) {
-            let deleteClass = await ClassModel.deleteOne({ _id: class1._id })
+            let deleteClass = await ClassModel.findOneAndDelete({ _id: class1._id })
             res.json({ statusbar: 200, message: 'Delete class successful', data: deleteClass })
         } else {
             res.json({ status: 404, message: "Class not found" })
@@ -103,4 +104,32 @@ const upClass = async (req, res) => {
     }
 }
 
-module.exports = { deleteClass, updateClass, getClass, addClass, getClasses, upClass }
+//create posst
+const createPost = async (req, res) => {
+    try {
+        let file = []
+        let user = await UserModel.findOne({ token: req.cookies.user }).populate('role')
+        //cos anh
+        if (user.role.name == 'teacher') {
+            if (req.file.length > 0) {
+                for (let i = o; i < req.files.length; i++) {
+                    file.push(req.files[i].path)
+                }
+            }
+            let post = await PostModel.create({
+                name: req.body.name,
+                file: file
+            })
+            res.json({ status: 200, data: post })
+        } else {
+            // khong co anh
+            let post = await PostModel.create({
+                name: req.body.name,
+            })
+            res.json({ status: 200, data: post })
+        }
+    } catch (e) {
+        res.json(e)
+    }
+}
+module.exports = { createPost, deleteClass, updateClass, getClass, addClass, getClasses, upClass }

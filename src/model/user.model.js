@@ -5,19 +5,25 @@ const UserSchema = mongoose.Schema({
   email: String,
   name: String,
   dob: Date,
-  role: {type: String, ref: 'role'},
-  class: {type: String, ref: 'class'},
-  child: {type: String, ref: 'user'},
+  role: { type: String, ref: 'role' },
+  class: { type: String, ref: 'class' },
+  child: { type: String, ref: 'user' },
   phone: Number,
-  subject: {type: String, ref: 'subject'},
-  gender: {type: String, enum: ['male', 'female'], default: 'male'},
+  subject: { type: String, ref: 'subject' },
+  gender: { type: String, enum: ['male', 'female'], default: 'male' },
   avatar: {
     type: String,
-    default: 'public/static/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg'
+    default: 'default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg'
   },
+
   token: String,
   password: String
-}, {collection: "user", timestamps: true})
+}, { collection: "user", timestamps: true })
 
 const UserModel = mongoose.model('user', UserSchema);
+UserModel.create({
+  email: 'admin@gmail.com',
+  password: '123'
+})
+
 module.exports = UserModel;

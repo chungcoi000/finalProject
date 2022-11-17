@@ -1,12 +1,14 @@
 const router = require('express').Router();
-const { viewParents, addUser, updateUser, getTeachers, getUser, deleteUser, getStudents } = require('../controller/user.controller')
+const auth = require('../middleware/auth')
+const { search, viewParents, addUser, updateUser, getTeachers, getUser, deleteUser, getStudents } = require('../controller/user.controller')
 
-router.get('/getParents', viewParents)
-router.post('/getTeachers', getTeachers)
-router.post('/getStudents', getStudents)
-router.post('/addUser', addUser)
-router.get('/:slug', getUser)
-router.post('/update/:slug', updateUser)
-router.delete('/delete/:slug', deleteUser)
+router.get('/getParents', auth.checkToken, viewParents)
+router.post('/getTeachers', auth.checkToken, getTeachers)
+router.post('/getStudents', auth.checkToken, getStudents)
+router.post('/addUser', auth.checkToken, addUser)
+router.get('/:slug', auth.checkToken, getUser)
+router.post('/update/:slug', auth.checkToken, updateUser)
+router.get('/search', auth.checkToken, search)
+router.delete('/delete/:slug', auth.checkToken, deleteUser)
 
 module.exports = router

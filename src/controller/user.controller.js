@@ -1,5 +1,7 @@
 const UserModel = require('../model/user.model');
-
+const RoleModel = require('../model/role.model');
+const ClassModel = require('../model/class.model');
+const UnitModel = require('../model/unit.model');
 const getTeachers = async (req, res) => {
     try {
         let role = await RoleModel.findOne({ name: 'teacher' })
@@ -99,16 +101,16 @@ async function viewParents(req, res) {
 
 const addUser = async (req, res) => {
     try {
-        let user = await UserModel.findOne({ phone: req.body.phone })
+        let user = await UserModel.findOne({ email: req.body.email })
         let role = await RoleModel.findOne({ name: req.body.role })
         if (user) {
-            res.json({ status: 400, message: 'user is already existed!' })
+            res.json({ status: 400, message: 'email is already used!' })
         } else {
             if (role.name === 'teacher') {
                 let newUser = await UserModel.create({
                     name: req.body.name,
                     dob: req.body.dob,
-                    role: req.body.role,
+                    role: 'teacher',
                     class: req.body.class,
                     phone: req.body.phone,
                     subject: req.body.subject,
@@ -118,8 +120,8 @@ const addUser = async (req, res) => {
                 let newUser = await UserModel.create({
                     name: req.body.name,
                     dob: req.body.dob,
-                    role: req.body.role,
-                    class: req.body.class,
+                    role: 'student',
+                    // class: req.body.class,
                     phone: req.body.phone,
                     subject: req.body.subject,
                     gender: req.body.gender,
@@ -128,8 +130,8 @@ const addUser = async (req, res) => {
                 let newUser = await UserModel.create({
                     name: req.body.name,
                     dob: req.body.dob,
-                    role: req.body.role,
-                    child: req.body.child,
+                    role: 'parent',
+                    // child: req.body.child,
                     phone: req.body.phone,
                     subject: req.body.subject,
                     gender: req.body.gender,
@@ -183,12 +185,12 @@ const getUser = async (req, res) => {
                 }
                 let classS = []
                 for (let i = 0; i < index.length; i++) {
-                    if(User.class !== classUser[index[i]]){
+                    if (User.class !== classUser[index[i]]) {
                         classS = classS.psuh(User.class)
                     }
                     classS = classS.psuh(classUser[index[i]])
                 }
-                
+
                 unit = await UnitModel.findOne({ _id: classS.unitID })
             } else if (role.name === 'parent') {
                 if (classUser) {
@@ -233,20 +235,20 @@ const updateUser = async (req, res) => {
                 let updateUser1 = await UserModel.updateOne({
                     name: req.body.name,
                     dob: req.body.dob,
-                    role: req.body.role,
+                    // role: req.body.role,
                     class: req.body.class,
                     phone: req.body.phone,
-                    subject: req.body.subject,
+                    // subject: req.body.subject,
                     gender: req.body.gender
                 })
             } else {
                 let updateUser1 = await UserModel.create({
                     name: req.body.name,
                     dob: req.body.dob,
-                    role: req.body.role,
+                    // role: req.body.role,
                     child: req.body.child,
                     phone: req.body.phone,
-                    subject: req.body.subject,
+                    // subject: req.body.subject,
                     gender: req.body.gender,
                 })
             }
@@ -276,5 +278,50 @@ const deleteUser = async (req, res) => {
     }
 }
 
+//search
+const search = async (req, res) => {
+    try {
+        let user
+        let class12 = []
+        // khi co name va unit
+        if (req.query.name != "" && req.query.unit != "") {
+            let unit = await UnitModel.findOne({ name: req.query.unit })
+            let class1 = await ClassModel.find({ unitID: unit._id })
+            for (let i = 0; i < class1.length; i++) {
+                let user = await UserModel.find({ name: req.query.name, class: class1[i].id })
+                class12.push(user)
+            }
+            res.json({ status: 200, data: class12 })
+            // khi co name va class
+        } else if (req.query.name != "" && req.query.class != "") {
+            let class1 = await ClassModel.findOne({ name: req.query.class })
+            user = class1.student
+            for (let i = 0; i < class1.student.length; i++) {
+                if (req.query.name == class1.student[i]) {
+                    user = await UserModel.findOne({ id: class1.student[i] })
+                }
+                res.json({ status: 200, data: user })
+            }
+            // khi co minh class
+        } else if (req.query.class != "") {
+            let class1 = await ClassModel.findOne({ name: req.query.class })
+            for (let i = 0; i < class1.length; i++) {
+                user = await UserModel.findOne({ id: class1[i] })
+                class12.push(user)
+            }
+            res.json({ status: 200, data: class12 })
+        } else {
+            // khi chi co name va role
+            if (req.body.role == "teacher") {
+                user = await UserModel.find({ name: req.query.name, role: "teacher" })
+            } else {
+                user = await UserModel.find({ name: req.query.name, role: "student" })
+            }
+            res.json({ status: 200, data: user })
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
 
-module.exports = { viewParents, addUser, updateUser, getTeachers, getUser, deleteUser, getStudents }
+module.exports = {search, viewParents, addUser, updateUser, getTeachers, getUser, deleteUser, getStudents }

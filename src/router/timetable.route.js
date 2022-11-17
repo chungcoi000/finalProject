@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const auth = require('../middleware/auth')
 const {
   createTimeTable,
   timeTableStudent,
@@ -8,10 +9,10 @@ const {
 } = require('../controller/timetable.controller')
 
 
-router.post('/create-timetable', createTimeTable)
-router.get('/student-timetable', timeTableStudent)
-router.get('/slot-student', slotStudent)
-router.get('/teacher-timetables', timeTableTeacherH)
-router.get('/teacher-timetable', timeTableTeacher)
+router.post('/create-timetable',auth.checkToken, createTimeTable)
+router.get('/student-timetable', auth.checkToken,timeTableStudent)
+router.get('/slot-student',auth.checkToken, slotStudent)
+router.get('/teacher-timetables', auth.checkToken,timeTableTeacherH)
+router.get('/teacher-timetable',auth.checkToken, timeTableTeacher)
 
 module.exports = router
