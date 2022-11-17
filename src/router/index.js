@@ -23,6 +23,12 @@ router.use('/timeTables', timeTableRouter)
 const authRouter = require("./auth.route")
 router.use('/auth', authRouter)
 
-const attendanceRouter = require("./attendance.model")
+const attendanceRouter = require("./attendance.route")
 router.use('/attendance', attendanceRouter)
+
+const subjectRouter = require("./subject.route")
+router.use('/subject', subjectRouter)
+
+const slotRouter = require("./slot.route")
+router.use('/slot', slotRouter)
 module.exports = router;

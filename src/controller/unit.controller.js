@@ -16,7 +16,7 @@ async function createUnit(req, res) {
     if (Unit) {
       res.json({ status: 400, message: 'Unit is existed' })
     } else {
-      let Student = await UnitModel.create({
+      let unit = await UnitModel.create({
         name: req.body.name,
         slug: slug(req.body.name)
       })

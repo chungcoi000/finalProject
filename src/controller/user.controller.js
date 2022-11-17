@@ -1,102 +1,100 @@
 const UserModel = require('../model/user.model');
-const RoleModel = require('../model/role.model');
-const ClassModel = require('../model/class.model');
-const UnitModel = require('../model/unit.model');
+
 const getTeachers = async (req, res) => {
-    try {
-        let role = await RoleModel.findOne({ name: 'teacher' })
-        let teacher = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
-        let allTeachers = await UserModel.find({ role: role.id })
-        let total = Math.ceil(allTeachers.length / teacher.length);
-        let nextPage, prePage
-        let page = req.query.page
-        if (req.query.page >= total && req.query.page <= total) {
-            nextPage = false
-            prePage = false
-        } else if (req.query.page >= total) {
-            nextPage = false
-            prePage = true
-        } else if (req.query.page <= total) {
-            nextPage = true
-            prePage = false
-        } else {
-            nextPage = true
-            prePage = true
-        }
-        let data = [nextPage, prePage, total, page]
-        if (!teacher) {
-            res.json('khong co user ton tai')
-        } else {
-            res.json({ status: 200, data: teacher, pagination: data })
-        }
-    } catch (e) {
-        console.log(e);
+  try {
+    let role = await RoleModel.findOne({name: 'teacher'})
+    let teacher = await UserModel.find({role: role.id}).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    let allTeachers = await UserModel.find({role: role.id})
+    let total = Math.ceil(allTeachers.length / teacher.length);
+    let nextPage, prePage;
+    let page = req.query.page;
+    if (req.query.page >= total && req.query.page <= total) {
+      nextPage = false
+      prePage = false
+    } else if (req.query.page >= total) {
+      nextPage = false
+      prePage = true
+    } else if (req.query.page <= total) {
+      nextPage = true
+      prePage = false
+    } else {
+      nextPage = true
+      prePage = true
     }
+    let data = [nextPage, prePage, total, page]
+    if (!teacher) {
+      res.json('khong co user ton tai')
+    } else {
+      res.json({status: 200, data: teacher, pagination: data})
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 
 async function getStudents(req, res) {
-    try {
-        let role = await RoleModel.findOne({ name: 'student' })
-        let Students = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
-        let allStudents = await UserModel.find({ role: role.id })
-        let total = Math.ceil(allStudents.length / Students.length);
-        let nextPage, prePage
-        let page = req.query.page
-        if (req.query.page >= total && req.query.page <= total) {
-            nextPage = false
-            prePage = false
-        } else if (req.query.page >= total) {
-            nextPage = false
-            prePage = true
-        } else if (req.query.page <= total) {
-            nextPage = true
-            prePage = false
-        } else {
-            nextPage = true
-            prePage = true
-        }
-        let data = [nextPage, prePage, total, page]
-        if (!Students) {
-            res.json('khong co user ton tai')
-        } else {
-            res.json({ status: 200, data: teacher, data: data })
-        }
-    } catch (e) {
-        console.log(e);
+  try {
+    let role = await RoleModel.findOne({name: 'student'})
+    let Students = await UserModel.find({role: role.id}).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    let allStudents = await UserModel.find({role: role.id})
+    let total = Math.ceil(allStudents.length / Students.length);
+    let nextPage, prePage
+    let page = req.query.page
+    if (req.query.page >= total && req.query.page <= total) {
+      nextPage = false
+      prePage = false
+    } else if (req.query.page >= total) {
+      nextPage = false
+      prePage = true
+    } else if (req.query.page <= total) {
+      nextPage = true
+      prePage = false
+    } else {
+      nextPage = true
+      prePage = true
     }
+    let data = [nextPage, prePage, total, page]
+    if (!Students) {
+      res.json('khong co user ton tai')
+    } else {
+      res.json({status: 200, data: Students, pagination: data})
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function viewParents(req, res) {
-    try {
-        let role = await RoleModel.findOne({ name: 'parent' });
-        let Parents = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
-        let allParents = await UserModel.find({ role: role.id })
-        let total = Math.ceil(allParents.length / Parents.length);
-        let nextPage, prePage
-        let page = req.query.page
-        if (req.query.page >= total && req.query.page <= total) {
-            nextPage = false
-            prePage = false
-        } else if (req.query.page >= total) {
-            nextPage = false
-            prePage = true
-        } else if (req.query.page <= total) {
-            nextPage = true
-            prePage = false
-        } else {
-            nextPage = true
-            prePage = true
-        }
-        let data = [nextPage, prePage, total, page]
-        if (!Parents) {
-            res.json('khong co user ton tai')
-        } else {
-            res.json({ status: 200, data: teacher, data: data })
-        }
-    } catch (e) {
-        console.log(e);
+  try {
+    let role = await RoleModel.findOne({name: 'parent'});
+    let Parents = await UserModel.find({role: role.id}).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    let allParents = await UserModel.find({role: role.id})
+    let total = Math.ceil(allParents.length / Parents.length);
+    let nextPage, prePage
+    let page = req.query.page
+    if (req.query.page >= total && req.query.page <= total) {
+      nextPage = false
+      prePage = false
+    } else if (req.query.page >= total) {
+      nextPage = false
+      prePage = true
+    } else if (req.query.page <= total) {
+      nextPage = true
+      prePage = false
+    } else {
+      nextPage = true
+      prePage = true
     }
+    let data = [nextPage, prePage, total, page]
+    if (!Parents) {
+      res.json('No user are existed');
+    } else {
+      res.json({status: 200, data: Parents, pagination: data});
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 const addUser = async (req, res) => {
@@ -212,13 +210,15 @@ const getUser = async (req, res) => {
                     res.json({ status: 404, message: 'Student not found' })
                 }
             }
-            res.json({ status: 200, data: User, class: classS, unit: unit })
+          
+          classS = classUser[index]
+          unit = await UnitModel.findOne({_id: classS.unitID})
         } else {
-            res.json({ status: 404, message: "Teacher not found" })
+          res.json({status: 404, message: 'Parent not found'})
         }
-    } catch (e) {
-        console.log(e);
-    }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 const updateUser = async (req, res) => {
@@ -263,19 +263,20 @@ const updateUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-    try {
-        let user = await UserModel.findOne({ id: req.params.id })
-        if (user) {
-            let delteUser = await UserModel.findOneAndDelete({ _id: teacher._id })
-            let role = await RoleModel.findOne({ _id: delteUser._id })
-            let user = await UserModel.find({ role: role.id })
-            res.json({ statusbar: 200, message: 'Delete teacher successful', data: user })
-        } else {
-            res.json({ status: 404, message: "Teacher not found" })
-        }
-    } catch (e) {
-        console.log(e);
+  try {
+    let user = await UserModel.findOne({id: req.params.id})
+    if (user) {
+      let deleteUser = await UserModel.findOneAndDelete({_id: user._id})
+      let role = await RoleModel.findOne({_id: deleteUser._id})
+      let user = await UserModel.find({role: role.id})
+      res.json({statusbar: 200, message: 'Delete user successful', data: user})
+    } else {
+      res.json({status: 404, message: "User not found"});
     }
+  } catch (e) {
+    console.log(e);
+    res.json({status: 404, message: "Something error"});
+  }
 }
 
 //search
@@ -323,5 +324,6 @@ const search = async (req, res) => {
         console.log(e);
     }
 }
+
 
 module.exports = {search, viewParents, addUser, updateUser, getTeachers, getUser, deleteUser, getStudents }

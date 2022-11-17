@@ -1,5 +1,5 @@
-const router = require('express').Router();
-const ClassModel = require('../model/user.model');
+// const router = require('express').Router();
+const ClassModel = require('../model/class.model');
 const slug = require('slugify');
 const UserModel = require('../model/user.model');
 const PostModel = require('../model/post.model');

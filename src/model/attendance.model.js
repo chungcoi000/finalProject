@@ -2,7 +2,7 @@ const mongoose = require('./connectDB')
 
 const attendanceSchema = mongoose.Schema({
   attend: [{}],
-  classID: {type: String, ref: 'class'},
+  classID: { type: String, ref: 'class' },
   class_slot: { type: String, ref: 'class_slot' },
 }, { collection: 'attendance', timestamps: true })
 
