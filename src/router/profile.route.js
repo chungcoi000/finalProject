@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const {viewProfile} = require('../controller/profile.controller')
+const auth = require('../middleware/auth')
+const { viewProfile } = require('../controller/profile.controller')
 
-router.get('/viewProfile', viewProfile)
+router.get('/viewProfile', auth.checkToken, viewProfile)
 
 module.exports = router

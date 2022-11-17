@@ -14,6 +14,7 @@ app.use(cookieParser());
 app.set("views", "views");
 
 app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/views", express.static(path.join(__dirname, "views")));
 
 app.use('/', router)
 app.listen(process.env.PORT || "3000", () => {
