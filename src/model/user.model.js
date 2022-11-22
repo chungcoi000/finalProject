@@ -17,7 +17,8 @@ const UserSchema = mongoose.Schema({
   },
 
   token: String,
-  password: String
+  password: String,
+  unit: {type: String, ref:'unit'}
 }, { collection: "user", timestamps: true })
 
 const UserModel = mongoose.model('user', UserSchema);

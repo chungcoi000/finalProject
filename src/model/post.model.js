@@ -1,8 +1,9 @@
 const mongoose = require('./connectDB')
 const PostSchema = mongoose.Schema({
-    name: 'String',
-    userID: { ref: 'user', type: 'string' },
+    title: 'String',
+    AuthorID: { ref: 'user', type: 'string' },
     file: [{}],
+    content: String,
 }, { collection: "post", timeStamps: true })
 
 const PostModel = mongoose.model('Post', PostSchema)

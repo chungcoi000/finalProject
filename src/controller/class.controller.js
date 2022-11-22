@@ -3,6 +3,7 @@ const ClassModel = require('../model/class.model');
 const slug = require('slugify');
 const UserModel = require('../model/user.model');
 const PostModel = require('../model/post.model');
+const UnitModel = require('../model/unit.model');
 const getClasses = async (req, res) => {
     try {
         let classes = await ClassModel.find()
@@ -104,32 +105,19 @@ const upClass = async (req, res) => {
     }
 }
 
-//create posst
-const createPost = async (req, res) => {
+const getClassByUnit = async (req, res) => {
     try {
-        let file = []
-        let user = await UserModel.findOne({ token: req.cookies.user }).populate('role')
-        //cos anh
-        if (user.role.name == 'teacher') {
-            if (req.file.length > 0) {
-                for (let i = o; i < req.files.length; i++) {
-                    file.push(req.files[i].path)
-                }
-            }
-            let post = await PostModel.create({
-                name: req.body.name,
-                file: file
-            })
-            res.json({ status: 200, data: post })
+        let unit = await UnitModel.findOne({ name: req.params.name })
+        if (unit) {
+            let classbyUnit = await UserModel.find({ unitID: unit.id })
+            res.json({ status: 200, data: classbyUnit })
         } else {
-            // khong co anh
-            let post = await PostModel.create({
-                name: req.body.name,
-            })
-            res.json({ status: 200, data: post })
+            res.json({ status: 200, message: 'unit khong ton tai' })
         }
     } catch (e) {
         res.json(e)
     }
 }
-module.exports = { createPost, deleteClass, updateClass, getClass, addClass, getClasses, upClass }
+
+
+module.exports = { getClassByUnit, deleteClass, updateClass, getClass, addClass, getClasses, upClass }
