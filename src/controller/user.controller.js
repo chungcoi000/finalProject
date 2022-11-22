@@ -2,9 +2,9 @@ const UserModel = require('../model/user.model');
 
 const getTeachers = async (req, res) => {
   try {
-    let role = await RoleModel.findOne({name: 'teacher'})
-    let teacher = await UserModel.find({role: role.id}).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
-    let allTeachers = await UserModel.find({role: role.id})
+    let role = await RoleModel.findOne({ name: 'teacher' })
+    let teacher = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    let allTeachers = await UserModel.find({ role: role.id })
     let total = Math.ceil(allTeachers.length / teacher.length);
     let nextPage, prePage;
     let page = req.query.page;
@@ -25,7 +25,7 @@ const getTeachers = async (req, res) => {
     if (!teacher) {
       res.json('khong co user ton tai')
     } else {
-      res.json({status: 200, data: teacher, pagination: data})
+      res.json({ status: 200, data: teacher, pagination: data })
     }
   } catch (e) {
     console.log(e);
@@ -35,9 +35,9 @@ const getTeachers = async (req, res) => {
 
 async function getStudents(req, res) {
   try {
-    let role = await RoleModel.findOne({name: 'student'})
-    let Students = await UserModel.find({role: role.id}).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
-    let allStudents = await UserModel.find({role: role.id})
+    let role = await RoleModel.findOne({ name: 'student' })
+    let Students = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    let allStudents = await UserModel.find({ role: role.id })
     let total = Math.ceil(allStudents.length / Students.length);
     let nextPage, prePage
     let page = req.query.page
@@ -58,7 +58,7 @@ async function getStudents(req, res) {
     if (!Students) {
       res.json('khong co user ton tai')
     } else {
-      res.json({status: 200, data: Students, pagination: data})
+      res.json({ status: 200, data: Students, pagination: data })
     }
   } catch (e) {
     console.log(e);
@@ -67,9 +67,9 @@ async function getStudents(req, res) {
 
 async function viewParents(req, res) {
   try {
-    let role = await RoleModel.findOne({name: 'parent'});
-    let Parents = await UserModel.find({role: role.id}).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
-    let allParents = await UserModel.find({role: role.id})
+    let role = await RoleModel.findOne({ name: 'parent' });
+    let Parents = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
+    let allParents = await UserModel.find({ role: role.id })
     let total = Math.ceil(allParents.length / Parents.length);
     let nextPage, prePage
     let page = req.query.page
@@ -90,7 +90,7 @@ async function viewParents(req, res) {
     if (!Parents) {
       res.json('No user are existed');
     } else {
-      res.json({status: 200, data: Parents, pagination: data});
+      res.json({ status: 200, data: Parents, pagination: data });
     }
   } catch (e) {
     console.log(e);
@@ -98,232 +98,250 @@ async function viewParents(req, res) {
 }
 
 const addUser = async (req, res) => {
-    try {
-        let user = await UserModel.findOne({ email: req.body.email })
-        let role = await RoleModel.findOne({ name: req.body.role })
-        if (user) {
-            res.json({ status: 400, message: 'email is already used!' })
-        } else {
-            if (role.name === 'teacher') {
-                let newUser = await UserModel.create({
-                    name: req.body.name,
-                    dob: req.body.dob,
-                    role: 'teacher',
-                    class: req.body.class,
-                    phone: req.body.phone,
-                    subject: req.body.subject,
-                    gender: req.body.gender,
-                })
-            } else if (role.name = 'student') {
-                let newUser = await UserModel.create({
-                    name: req.body.name,
-                    dob: req.body.dob,
-                    role: 'student',
-                    // class: req.body.class,
-                    phone: req.body.phone,
-                    subject: req.body.subject,
-                    gender: req.body.gender,
-                })
-            } else {
-                let newUser = await UserModel.create({
-                    name: req.body.name,
-                    dob: req.body.dob,
-                    role: 'parent',
-                    // child: req.body.child,
-                    phone: req.body.phone,
-                    subject: req.body.subject,
-                    gender: req.body.gender,
-                })
-            }
-            res.json({ status: 200, message: 'Create user successful', data: newUser })
-        }
-    } catch (e) {
-        console.log(e);
+  try {
+    let user = await UserModel.findOne({ email: req.body.email })
+    let role = await RoleModel.findOne({ name: req.body.role })
+    if (user) {
+      res.json({ status: 400, message: 'email is already used!' })
+    } else {
+      if (role.name === 'teacher') {
+        let newUser = await UserModel.create({
+          name: req.body.name,
+          dob: req.body.dob,
+          role: 'teacher',
+          class: req.body.class,
+          phone: req.body.phone,
+          subject: req.body.subject,
+          gender: req.body.gender,
+        })
+      } else if (role.name = 'student') {
+        let newUser = await UserModel.create({
+          name: req.body.name,
+          dob: req.body.dob,
+          role: 'student',
+          // class: req.body.class,
+          phone: req.body.phone,
+          subject: req.body.subject,
+          gender: req.body.gender,
+          unit: req.body.unit
+        })
+      } else {
+        let newUser = await UserModel.create({
+          name: req.body.name,
+          dob: req.body.dob,
+          role: 'parent',
+          // child: req.body.child,
+          phone: req.body.phone,
+          subject: req.body.subject,
+          gender: req.body.gender,
+        })
+      }
+      res.json({ status: 200, message: 'Create user successful', data: newUser })
     }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 const getUser = async (req, res) => {
-    try {
-        let User = await UserModel.findOne({ id: req.params.id });
-        let role = await RoleModel.findOne({ id: User.role })
-        let unit, classS
-        if (User) {
-            let classUser = await ClassModel.find()
-            if (role.name === 'student') {
-                if (classUser) {
-                    let arr = []
-                    for (let i = 0; i < classUser.lenth; i++) {
-                        arr = arr.push(classUser[i].student)
-                    }
-                    let index
-                    for (let i = 0; i < arr.length; i++) {
-                        for (let j = 0; j < arr[i].length; j++) {
-                            if (User.id === arr[i][j]) {
-                                index = i
-                            }
-                        }
-                    }
-                    classS = classUser[index]
-                    unit = await UnitModel.findOne({ _id: classS.unitID })
-                } else {
-                    res.json({ status: 404, message: 'Student not found' })
-                }
-            } else if (role.name === 'teacher') {
-                let arr = []
-                for (let i = 0; i < classUser.lenth; i++) {
-                    arr = arr.push(classUser[i].formTeacher)
-                }
-                let index = []
-                for (let i = 0; i < arr.length; i++) {
-                    for (let j = 0; j < arr[i].length; j++) {
-                        if (User.id === arr[i][j]) {
-                            index = index.push(i)
-                        }
-                    }
-                }
-                let classS = []
-                for (let i = 0; i < index.length; i++) {
-                    if (User.class !== classUser[index[i]]) {
-                        classS = classS.psuh(User.class)
-                    }
-                    classS = classS.psuh(classUser[index[i]])
-                }
-
-                unit = await UnitModel.findOne({ _id: classS.unitID })
-            } else if (role.name === 'parent') {
-                if (classUser) {
-                    let arr = []
-                    for (let i = 0; i < classUser.lenth; i++) {
-                        arr = arr.push(classUser[i].student)
-                    }
-                    let index
-                    for (let i = 0; i < arr.length; i++) {
-                        for (let j = 0; j < arr[i].length; j++) {
-                            if (User.child === arr[i][j]) {
-                                index = i
-                            }
-                        }
-                    }
-                    classS = classUser[index]
-                    unit = await UnitModel.findOne({ _id: classS.unitID })
-                } else {
-                    res.json({ status: 404, message: 'Student not found' })
-                }
+  try {
+    let User = await UserModel.findOne({ id: req.params.id });
+    let role = await RoleModel.findOne({ id: User.role })
+    let unit, classS
+    if (User) {
+      let classUser = await ClassModel.find()
+      if (role.name === 'student') {
+        if (classUser) {
+          let arr = []
+          for (let i = 0; i < classUser.lenth; i++) {
+            arr = arr.push(classUser[i].student)
+          }
+          let index
+          for (let i = 0; i < arr.length; i++) {
+            for (let j = 0; j < arr[i].length; j++) {
+              if (User.id === arr[i][j]) {
+                index = i
+              }
             }
-          
+          }
           classS = classUser[index]
-          unit = await UnitModel.findOne({_id: classS.unitID})
+          unit = await UnitModel.findOne({ _id: classS.unitID })
         } else {
-          res.json({status: 404, message: 'Parent not found'})
+          res.json({ status: 404, message: 'Student not found' })
         }
+      } else if (role.name === 'teacher') {
+        let arr = []
+        for (let i = 0; i < classUser.lenth; i++) {
+          arr = arr.push(classUser[i].formTeacher)
+        }
+        let index = []
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = 0; j < arr[i].length; j++) {
+            if (User.id === arr[i][j]) {
+              index = index.push(i)
+            }
+          }
+        }
+        let classS = []
+        for (let i = 0; i < index.length; i++) {
+          if (User.class !== classUser[index[i]]) {
+            classS = classS.psuh(User.class)
+          }
+          classS = classS.psuh(classUser[index[i]])
+        }
+
+        unit = await UnitModel.findOne({ _id: classS.unitID })
+      } else if (role.name === 'parent') {
+        if (classUser) {
+          let arr = []
+          for (let i = 0; i < classUser.lenth; i++) {
+            arr = arr.push(classUser[i].student)
+          }
+          let index
+          for (let i = 0; i < arr.length; i++) {
+            for (let j = 0; j < arr[i].length; j++) {
+              if (User.child === arr[i][j]) {
+                index = i
+              }
+            }
+          }
+          classS = classUser[index]
+          unit = await UnitModel.findOne({ _id: classS.unitID })
+        } else {
+          res.json({ status: 404, message: 'Student not found' })
+        }
+      }
+
+      classS = classUser[index]
+      unit = await UnitModel.findOne({ _id: classS.unitID })
+    } else {
+      res.json({ status: 404, message: 'Parent not found' })
+    }
   } catch (e) {
     console.log(e);
   }
 }
 
 const updateUser = async (req, res) => {
-    try {
-        let User = await UserModel.findOne({ id: req.params.id })
-        if (User) {
-            let role = await RoleModel.findOne({ id: User.role })
-            if (role.name === 'teacher') {
-                let updateUser1 = await UserModel.updateOne({
-                    phone: req.body.phone,
-                    class: req.body.class,
-                })
-            } else if (role.name === 'student') {
-                let updateUser1 = await UserModel.updateOne({
-                    name: req.body.name,
-                    dob: req.body.dob,
-                    // role: req.body.role,
-                    class: req.body.class,
-                    phone: req.body.phone,
-                    // subject: req.body.subject,
-                    gender: req.body.gender
-                })
-            } else {
-                let updateUser1 = await UserModel.create({
-                    name: req.body.name,
-                    dob: req.body.dob,
-                    // role: req.body.role,
-                    child: req.body.child,
-                    phone: req.body.phone,
-                    // subject: req.body.subject,
-                    gender: req.body.gender,
-                })
-            }
-            res.json({ status: 200, data: updateUser1, message: "Update teacher successful" })
-        } else {
-            res.json({ status: 404, message: "Teacher not found" });
-        }
-    } catch (e) {
-        console.log(e);
-        res.json({ status: 404, message: "Something error" });
+  try {
+    let User = await UserModel.findOne({ id: req.params.id })
+    if (User) {
+      let role = await RoleModel.findOne({ id: User.role })
+      if (role.name === 'teacher') {
+        let updateUser1 = await UserModel.updateOne({
+          phone: req.body.phone,
+          class: req.body.class,
+        })
+      } else if (role.name === 'student') {
+        let updateUser1 = await UserModel.updateOne({
+          name: req.body.name,
+          dob: req.body.dob,
+          // role: req.body.role,
+          class: req.body.class,
+          phone: req.body.phone,
+          // subject: req.body.subject,
+          gender: req.body.gender
+        })
+      } else {
+        let updateUser1 = await UserModel.create({
+          name: req.body.name,
+          dob: req.body.dob,
+          // role: req.body.role,
+          child: req.body.child,
+          phone: req.body.phone,
+          // subject: req.body.subject,
+          gender: req.body.gender,
+        })
+      }
+      res.json({ status: 200, data: updateUser1, message: "Update teacher successful" })
+    } else {
+      res.json({ status: 404, message: "Teacher not found" });
     }
+  } catch (e) {
+    console.log(e);
+    res.json({ status: 404, message: "Something error" });
+  }
 }
 
 const deleteUser = async (req, res) => {
   try {
-    let user = await UserModel.findOne({id: req.params.id})
+    let user = await UserModel.findOne({ id: req.params.id })
     if (user) {
-      let deleteUser = await UserModel.findOneAndDelete({_id: user._id})
-      let role = await RoleModel.findOne({_id: deleteUser._id})
-      let user = await UserModel.find({role: role.id})
-      res.json({statusbar: 200, message: 'Delete user successful', data: user})
+      let deleteUser = await UserModel.findOneAndDelete({ _id: user._id })
+      let role = await RoleModel.findOne({ _id: deleteUser._id })
+      let user = await UserModel.find({ role: role.id })
+      res.json({ statusbar: 200, message: 'Delete user successful', data: user })
     } else {
-      res.json({status: 404, message: "User not found"});
+      res.json({ status: 404, message: "User not found" });
     }
   } catch (e) {
     console.log(e);
-    res.json({status: 404, message: "Something error"});
+    res.json({ status: 404, message: "Something error" });
   }
 }
 
 //search
 const search = async (req, res) => {
-    try {
-        let user
-        let class12 = []
-        // khi co name va unit
-        if (req.query.name != "" && req.query.unit != "") {
-            let unit = await UnitModel.findOne({ name: req.query.unit })
-            let class1 = await ClassModel.find({ unitID: unit._id })
-            for (let i = 0; i < class1.length; i++) {
-                let user = await UserModel.find({ name: req.query.name, class: class1[i].id })
-                class12.push(user)
-            }
-            res.json({ status: 200, data: class12 })
-            // khi co name va class
-        } else if (req.query.name != "" && req.query.class != "") {
-            let class1 = await ClassModel.findOne({ name: req.query.class })
-            user = class1.student
-            for (let i = 0; i < class1.student.length; i++) {
-                if (req.query.name == class1.student[i]) {
-                    user = await UserModel.findOne({ id: class1.student[i] })
-                }
-                res.json({ status: 200, data: user })
-            }
-            // khi co minh class
-        } else if (req.query.class != "") {
-            let class1 = await ClassModel.findOne({ name: req.query.class })
-            for (let i = 0; i < class1.length; i++) {
-                user = await UserModel.findOne({ id: class1[i] })
-                class12.push(user)
-            }
-            res.json({ status: 200, data: class12 })
-        } else {
-            // khi chi co name va role
-            if (req.body.role == "teacher") {
-                user = await UserModel.find({ name: req.query.name, role: "teacher" })
-            } else {
-                user = await UserModel.find({ name: req.query.name, role: "student" })
-            }
-            res.json({ status: 200, data: user })
+  try {
+    let user
+    let class12 = []
+    // khi co name va unit
+    if (req.query.name != "" && req.query.unit != "") {
+      let unit = await UnitModel.findOne({ name: req.query.unit })
+      let class1 = await ClassModel.find({ unitID: unit._id })
+      for (let i = 0; i < class1.length; i++) {
+        let user = await UserModel.find({ name: req.query.name, class: class1[i].id })
+        class12.push(user)
+      }
+      res.json({ status: 200, data: class12 })
+      // khi co name va class
+    } else if (req.query.name != "" && req.query.class != "") {
+      let class1 = await ClassModel.findOne({ name: req.query.class })
+      user = class1.student
+      for (let i = 0; i < class1.student.length; i++) {
+        if (req.query.name == class1.student[i]) {
+          user = await UserModel.findOne({ id: class1.student[i] })
         }
-    } catch (e) {
-        console.log(e);
+        res.json({ status: 200, data: user })
+      }
+      // khi co minh class
+    } else if (req.query.class != "") {
+      let class1 = await ClassModel.findOne({ name: req.query.class })
+      for (let i = 0; i < class1.length; i++) {
+        user = await UserModel.findOne({ id: class1[i] })
+        class12.push(user)
+      }
+      res.json({ status: 200, data: class12 })
+    } else {
+      // khi chi co name va role
+      if (req.body.role == "teacher") {
+        user = await UserModel.find({ name: req.query.name, role: "teacher" })
+      } else {
+        user = await UserModel.find({ name: req.query.name, role: "student" })
+      }
+      res.json({ status: 200, data: user })
     }
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 
-module.exports = {search, viewParents, addUser, updateUser, getTeachers, getUser, deleteUser, getStudents }
+const updateUserAvatar = async (req, res) => {
+  try {
+    let userInfo = await UserModel.findOne({ token: req.cookies.user })
+    // console.log(userInfo.avatar);
+    let path
+    if (req.file == undefined) {
+      path = userInfo.avatar
+    } else {
+      path = req.file.path;
+    }
+    let user = await UserModel.findByIdAndUpdate({ _id: userInfo.id }, { avatar: path })
+    res.json({ status: 200, data: user })
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+module.exports = { search, viewParents, addUser, updateUser, getTeachers, getUser, deleteUser, getStudents, updateUserAvatar }

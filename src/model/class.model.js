@@ -9,5 +9,5 @@ const ClassSchema = mongoose.Schema({
 }, { collection: 'class', timestamps: true })
 
 const ClassModel = mongoose.model('class', ClassSchema);
-ClassModel.create({ name: 'asdas' })
+// ClassModel.create({ name: 'asdas' })
 module.exports = ClassModel;
