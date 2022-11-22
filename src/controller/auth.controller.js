@@ -30,7 +30,7 @@ async function login(req, res) {
         res.json({ message: " Incorrect password" });
       }
     } else {
-      res.json({ message: "login failed", status: 400, err: false });
+      res.json({ message: "Login failed", status: 400, err: false });
     }
   } catch (err) {
     res.json(76, err);
@@ -55,8 +55,7 @@ async function register(req, res) {
           email: req.body.email,
           password: password,
           name: req.body.name,
-          dob: req.body.dateOfBirth,
-          role: req.body.role,
+          dob: req.body.dob,
           class: req.body.class,
           phone: req.body.phone,
           gender: req.body.gender,
@@ -68,8 +67,7 @@ async function register(req, res) {
           email: req.body.email,
           password: password,
           name: req.body.name,
-          dob: req.body.dateOfBirth,
-          role: req.body.role,
+          dob: req.body.dob,
           class: req.body.class,
           subject: req.body.subject,
           phone: req.body.phone,
@@ -77,13 +75,12 @@ async function register(req, res) {
           role: "teacher",
         });
       } else {
-        const password = await bcrypt.hash(req.body.password, 10);
+        const password = await bcrypt.hash(req.body.password, 20);
         let newUser = await UserModel.create({
           email: req.body.email,
           password: password,
           name: req.body.name,
-          dob: req.body.dateOfBirth,
-          role: req.body.role,
+          dob: req.body.dob,
           child: req.body.child,
           phone: req.body.phone,
           gender: req.body.gender,
@@ -92,7 +89,7 @@ async function register(req, res) {
       }
 
       res.json({
-        message: "login success",
+        message: "Register successful",
         status: 200,
       });
     }

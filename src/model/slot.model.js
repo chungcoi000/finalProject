@@ -14,7 +14,7 @@ SlotModel.create({
 })
 
 SlotModel.create({
-  slot: '12',
+  slot: '2',
   startDate: '8h10',
   endDate: "8h55"
 })
