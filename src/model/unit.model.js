@@ -6,13 +6,13 @@ const UnitSchema = mongoose.Schema({
 }, { collection: 'unit' });
 
 const UnitModel = mongoose.model('unit', UnitSchema);
-UnitModel.create({
-  name: '10'
-})
-UnitModel.create({
-  name: '11'
-})
-UnitModel.create({
-  name: '12'
-})
+// UnitModel.create({
+//   name: '10'
+// })
+// UnitModel.create({
+//   name: '11'
+// })
+// UnitModel.create({
+//   name: '12'
+// })
 module.exports = UnitModel;

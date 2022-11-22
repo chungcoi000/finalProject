@@ -1,4 +1,7 @@
 const UserModel = require('../model/user.model');
+const RoleModel = require("../model/role.model");
+const ClassModel = require("../model/class.model");
+const UnitModel = require("../model/unit.model");
 
 const getTeachers = async (req, res) => {
   try {
@@ -71,7 +74,7 @@ async function viewParents(req, res) {
     let Parents = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
     let allParents = await UserModel.find({ role: role.id })
     let total = Math.ceil(allParents.length / Parents.length);
-    let nextPage, prePage
+    let nextPage, prePage;
     let page = req.query.page
     if (req.query.page >= total && req.query.page <= total) {
       nextPage = false
@@ -153,7 +156,7 @@ const getUser = async (req, res) => {
       if (role.name === 'student') {
         if (classUser) {
           let arr = []
-          for (let i = 0; i < classUser.lenth; i++) {
+          for (let i = 0; i < classUser.length; i++) {
             arr = arr.push(classUser[i].student)
           }
           let index
@@ -185,16 +188,16 @@ const getUser = async (req, res) => {
         let classS = []
         for (let i = 0; i < index.length; i++) {
           if (User.class !== classUser[index[i]]) {
-            classS = classS.psuh(User.class)
+            classS = classS.push(User.class)
           }
-          classS = classS.psuh(classUser[index[i]])
+          classS = classS.push(classUser[index[i]])
         }
 
         unit = await UnitModel.findOne({ _id: classS.unitID })
       } else if (role.name === 'parent') {
         if (classUser) {
           let arr = []
-          for (let i = 0; i < classUser.lenth; i++) {
+          for (let i = 0; i < classUser.length; i++) {
             arr = arr.push(classUser[i].student)
           }
           let index

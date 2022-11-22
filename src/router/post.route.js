@@ -18,12 +18,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 var cpUpload = upload.fields([
-    { name: 'avatar', maxCount: 1 },
     { name: 'file', maxCount: 5 },
 ]);
 
 router.post('/create', auth.checkToken, cpUpload, createPost)
-router.get('/getPosts', auth.checkToken, getPosts)
+router.get('/getPosts/:classId', auth.checkToken, getPosts)
 router.get('/getPost/:id', auth.checkToken, getPost)
 router.post('/update/:id', auth.checkToken, updatePost)
 router.delete('/delete/:id', auth.checkToken, deletePost)

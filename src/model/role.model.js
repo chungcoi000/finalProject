@@ -6,8 +6,8 @@ const RoleSchema = mongoose.Schema({
 
 const RoleModel = mongoose.model('role', RoleSchema);
 
-RoleModel.create({ name: 'teacher' })
-RoleModel.create({ name: 'student' })
-RoleModel.create({ name: 'parent' })
-RoleModel.create({ name: 'admin' })
+// RoleModel.create({ name: 'teacher' })
+// RoleModel.create({ name: 'student' })
+// RoleModel.create({ name: 'parent' })
+// RoleModel.create({ name: 'admin' })
 module.exports = RoleModel;

@@ -22,9 +22,5 @@ const UserSchema = mongoose.Schema({
 }, { collection: "user", timestamps: true })
 
 const UserModel = mongoose.model('user', UserSchema);
-UserModel.create({
-  email: 'admin@gmail.com',
-  password: '123'
-})
 
 module.exports = UserModel;

@@ -23,7 +23,6 @@ async function createClassSlot(req, res) {
   }
 }
 
-
 async function viewClassSlots(req, res) {
   try {
     let classSlots = await Class_slotModel.find()

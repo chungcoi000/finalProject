@@ -77,42 +77,14 @@ const deleteClass = async (req, res) => {
     }
 }
 
-
-const upClass = async (req, res) => {
-    try {
-        let class1 = await ClassModel.find()
-        let class12 = []
-        for (let i = 0; i < class1.length; i++) {
-            if (class1[i].includes('12')) {
-                class12 = class12.push(class1[i])
-            }
-        }
-        for (let i = 0; i < class12.length; i++) {
-            for (let j = 0; j < class12[i].student.length; j++) {
-                await UserModel.deleteOne({ child: class12[i].student[j] })
-                await UserModel.deleteOne({ _id: class12[i].student[j] });
-            }
-        }
-        let classUp = await ClassModel.find()
-        for (let i = 0; i < classUp.length; i++) {
-            let up = classUp[i].name.split('')
-            let a = Number(up[1]) + 1
-            up = up.splice(1, 1, a)
-            classUp[i].name = up.join()
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}
-
 const getClassByUnit = async (req, res) => {
     try {
-        let unit = await UnitModel.findOne({ name: req.params.name })
+        let unit = await UnitModel.findOne({ name: req.params.name });
         if (unit) {
-            let classbyUnit = await UserModel.find({ unitID: unit.id })
-            res.json({ status: 200, data: classbyUnit })
+            let classByUnit = await ClassModel.find({ unitID: unit.id });
+            res.json({ status: 200, data: classByUnit });
         } else {
-            res.json({ status: 200, message: 'unit khong ton tai' })
+            res.json({ status: 200, message: 'Unit khong ton tai' });
         }
     } catch (e) {
         res.json(e)
@@ -120,4 +92,4 @@ const getClassByUnit = async (req, res) => {
 }
 
 
-module.exports = { getClassByUnit, deleteClass, updateClass, getClass, addClass, getClasses, upClass }
+module.exports = { getClassByUnit, deleteClass, updateClass, getClass, addClass, getClasses }

@@ -3,12 +3,12 @@ const slug = require('slugify');
 
 async function createSubject(req, res) {
   try {
-    let subject = await SubjectModel.findOne({name: req.body.name})
+    let subject = await SubjectModel.findOne({name: req.body.name});
     if (subject) {
-      res.json({status: 400, message: 'Subject already exists'})
+      res.json({status: 400, message: 'Subject already exists'});
     } else {
-      await SubjectModel.create({name: req.body.name, slug: slug(req.body.name)})
-      res.json({status: 200, message: 'Subject created successfully'})
+      await SubjectModel.create({name: req.body.name, slug: slug(req.body.name)});
+      res.json({status: 200, message: 'Subject created successfully'});
     }
   } catch (e) {
     res.json(e)
@@ -30,9 +30,9 @@ async function updateSubject(req, res) {
   try {
     let subject = await SubjectModel.findOne({_id: req.params.id})
     if (subject) {
-      res.json({status: 200, subject: subject})
+      res.json({status: 200, message: "Update subject successful", subject: subject})
     } else {
-      res.json({status: 404, status: 'Not Found'})
+      res.json({status: 404, message: 'Not Found'})
     }
   } catch (e) {
     res.json(e);
@@ -44,10 +44,10 @@ async function deleteSubject(req, res) {
   try {
     let subject = await SubjectModel.findOne({_id: req.params.id})
     if (subject) {
-      let subjectDelete = await SubjectModel.deleteOne({_id: subject._id})
-      res.json({status: 200, message: subjectDelete})
+      let subjectDelete = await SubjectModel.deleteOne({_id: subject._id});
+      res.json({status: 200, message: "Delete subject successful", subject: subjectDelete});
     } else {
-      res.json({status: 404, status: 'Not Found'})
+      res.json({status: 404, status: 'Not Found'});
     }
   } catch (e) {
     res.json(e);
