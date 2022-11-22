@@ -47,7 +47,7 @@ async function register(req, res) {
         message: 'Email is already existed',
       })
     } else {
-      const password = await bcrypt.hash(req.body.password, 10);
+      const password = await bcrypt.hash(req.body.password, 8);
       let newUser = await UserModel.create({
         email: req.body.email,
         password: password,
