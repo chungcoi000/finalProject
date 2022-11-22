@@ -104,32 +104,5 @@ const upClass = async (req, res) => {
     }
 }
 
-//create posst
-const createPost = async (req, res) => {
-    try {
-        let file = []
-        let user = await UserModel.findOne({ token: req.cookies.user }).populate('role')
-        //cos anh
-        if (user.role.name == 'teacher') {
-            if (req.file.length > 0) {
-                for (let i = o; i < req.files.length; i++) {
-                    file.push(req.files[i].path)
-                }
-            }
-            let post = await PostModel.create({
-                name: req.body.name,
-                file: file
-            })
-            res.json({ status: 200, data: post })
-        } else {
-            // khong co anh
-            let post = await PostModel.create({
-                name: req.body.name,
-            })
-            res.json({ status: 200, data: post })
-        }
-    } catch (e) {
-        res.json(e)
-    }
-}
+
 module.exports = { createPost, deleteClass, updateClass, getClass, addClass, getClasses, upClass }
