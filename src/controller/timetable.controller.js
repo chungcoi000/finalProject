@@ -47,33 +47,6 @@ async function timeTableStudent(req, res) {
   }
 }
 
-async function slotStudent(req, res) {
-  try {
-    let token = req.cookies;
-    let user = await UserModel.findOne({ token: token.user })
-    if (user.role === 'student') {
-      let classStudent = await ClassModel.findOne({ _id: user.class })
-      if (classStudent) {
-        let classSlot = await Class_slotModel.findOne({ classID: classStudent.id }).populate('slotID')
-        res.json({ status: 200, Message: 'Success', classSlot })
-      } else {
-        res.json({ status: 404, Message: 'classSlot  not found' })
-      }
-    } else if (user.role === 'parent') {
-      let student = await UserModel.findOne({ _id: user.child })
-      let classStudent = await ClassModel.findOne({ _id: student.class })
-      if (classStudent) {
-        let classSlot = await Class_slotModel.findOne({ classID: classStudent.id }).populate('slotID')
-        res.json({ status: 200, Message: 'Success', classSlot })
-      } else {
-        res.json({ status: 404, Message: 'classSlot  not found' })
-      }
-    }
-  } catch (e) {
-    console.log(e);
-  }
-}
-
 async function timeTableTeacherH(req, res) {
   try {
     let timetable = []
@@ -115,4 +88,4 @@ async function timeTableTeacher(req, res) {
   }
 }
 
-module.exports = { createTimeTable, timeTableStudent, slotStudent, timeTableTeacherH, timeTableTeacher }
+module.exports = { createTimeTable, timeTableStudent, timeTableTeacherH, timeTableTeacher }

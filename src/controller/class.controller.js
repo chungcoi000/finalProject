@@ -51,6 +51,7 @@ const updateClass = async (req, res) => {
         let class1 = await ClassModel.findOne({ id: req.params.id })
         if (class1) {
             let updateClass = await ClassModel.updateOne({
+                name: req.body.name,
                 unit: req.body.unit,
                 fromTeacher: req.body.fromTeacher,
             });
@@ -79,7 +80,7 @@ const deleteClass = async (req, res) => {
 
 const getClassByUnit = async (req, res) => {
     try {
-        let unit = await UnitModel.findOne({ name: req.params.name });
+        let unit = await UnitModel.findOne({ name: req.query.name });
         if (unit) {
             let classByUnit = await ClassModel.find({ unitID: unit.id });
             res.json({ status: 200, data: classByUnit });

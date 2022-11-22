@@ -17,21 +17,21 @@ const ProfileRouter = require("./profile.route")
 router.use('/profiles', ProfileRouter)
 
 const timeTableRouter = require("./timetable.route")
-router.use('/timeTables', timeTableRouter)
+router.use('/timetable', timeTableRouter)
 
 
 const authRouter = require("./auth.route")
 router.use('/auth', authRouter)
 
 const attendanceRouter = require("./attendance.route")
-router.use('/attendance', attendanceRouter)
+router.use('/attendances', attendanceRouter)
 
 const subjectRouter = require("./subject.route")
-router.use('/subject', subjectRouter)
+router.use('/subjects', subjectRouter)
 
 const slotRouter = require("./slot.route")
-router.use('/slot', slotRouter)
+router.use('/slots', slotRouter)
 
 const PostRouter = require("./post.route")
-router.use('/post', PostRouter)
+router.use('/posts', PostRouter)
 module.exports = router;

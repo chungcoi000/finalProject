@@ -5,8 +5,8 @@ const { deleteClass, getClass, getClasses, addClass, updateClass, getClassByUnit
 router.get('/', auth.checkToken, getClasses);
 router.post('/add', auth.checkToken, addClass);
 router.get('/:slug', auth.checkToken, getClass);
-router.post('/update/:slug', auth.checkToken, updateClass);
-router.post('/getClassByUnit/name', auth.checkToken, getClassByUnit)
-router.delete('/delete/:slug', auth.checkToken, deleteClass);
+router.post('/update/:id', auth.checkToken, updateClass);
+router.get('/getClassByUnit', auth.checkToken, getClassByUnit)
+router.delete('/delete/:id', auth.checkToken, deleteClass);
 
 module.exports = router

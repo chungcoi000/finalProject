@@ -28,7 +28,7 @@ async function viewSubject(req, res) {
 
 async function updateSubject(req, res) {
   try {
-    let subject = await SubjectModel.findOne({_id: req.params.id})
+    let subject = await SubjectModel.findOne({slug: req.params.slug});
     if (subject) {
       res.json({status: 200, message: "Update subject successful", subject: subject})
     } else {
@@ -42,9 +42,9 @@ async function updateSubject(req, res) {
 
 async function deleteSubject(req, res) {
   try {
-    let subject = await SubjectModel.findOne({_id: req.params.id})
+    let subject = await SubjectModel.findOne({slug: req.params.slug})
     if (subject) {
-      let subjectDelete = await SubjectModel.deleteOne({_id: subject._id});
+      let subjectDelete = await SubjectModel.deleteOne({slug: subject.slug});
       res.json({status: 200, message: "Delete subject successful", subject: subjectDelete});
     } else {
       res.json({status: 404, status: 'Not Found'});

@@ -1,5 +1,7 @@
 const Class_slotModel = require('../model/class_slot.model');
 const slug = require('slugify');
+const UserModel = require("../model/user.model");
+const ClassModel = require("../model/class.model");
 
 async function createClassSlot(req, res) {
   try {
@@ -72,6 +74,33 @@ async function deleteClassSlot(req, res) {
   }
 }
 
+async function slotStudent(req, res) {
+  try {
+    let token = req.cookies;
+    let user = await UserModel.findOne({ token: token.user })
+    if (user.role === 'student') {
+      let classStudent = await ClassModel.findOne({ _id: user.class })
+      if (classStudent) {
+        let classSlot = await Class_slotModel.findOne({ classID: classStudent.id }).populate('slotID')
+        res.json({ status: 200, Message: 'Success', classSlot })
+      } else {
+        res.json({ status: 404, Message: 'classSlot  not found' })
+      }
+    } else if (user.role === 'parent') {
+      let student = await UserModel.findOne({ _id: user.child })
+      let classStudent = await ClassModel.findOne({ _id: student.class })
+      if (classStudent) {
+        let classSlot = await Class_slotModel.findOne({ classID: classStudent.id }).populate('slotID')
+        res.json({ status: 200, Message: 'Success', classSlot })
+      } else {
+        res.json({ status: 404, Message: 'classSlot  not found' })
+      }
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
 
-module.exports = { deleteClassSlot, updateClassSlot, viewClassSlots, createClassSlot, viewClassSlot }
+
+module.exports = { deleteClassSlot, updateClassSlot, viewClassSlots, createClassSlot, viewClassSlot, slotStudent }
 

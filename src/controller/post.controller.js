@@ -40,7 +40,7 @@ const createPost = async (req, res) => {
 
 const getPosts = async (req, res) => {
     try {
-        let posts = await PostModel.find({class: req.params.id});
+        let posts = await PostModel.find({id: req.params.id});
         if (posts) {
             res.json({ status: 200, data: posts })
         } else {

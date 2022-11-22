@@ -19,11 +19,11 @@ const upload = multer({ storage: storage });
 router.get('/getParents', auth.checkToken, viewParents)
 router.post('/getTeachers', auth.checkToken, getTeachers)
 router.post('/getStudents', auth.checkToken, getStudents)
-router.post('/addUser', auth.checkToken, addUser)
-router.get('/:slug', auth.checkToken, getUser)
-router.post('/update/:slug', auth.checkToken, updateUser)
+router.post('/add', auth.checkToken, addUser)
+router.get('/:id', auth.checkToken, getUser)
+router.post('/update/:id', auth.checkToken, updateUser)
 router.get('/search', auth.checkToken, search)
-router.delete('/delete/:slug', auth.checkToken, deleteUser)
-routerpost('updateAvatar', auth.checkToken, upload.single('avatar'), updateUserAvatar)
+router.delete('/delete/:id', auth.checkToken, deleteUser)
+router.post('/updateAvatar', auth.checkToken, upload.single('avatar'), updateUserAvatar)
 
 module.exports = router
