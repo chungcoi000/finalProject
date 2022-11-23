@@ -8,7 +8,7 @@ const UserSchema = mongoose.Schema({
   role: { type: String, ref: 'role' },
   class: { type: String, ref: 'class' },
   child: { type: String, ref: 'user' },
-  phone: Number,
+  phone: String,
   subject: { type: String, ref: 'subject' },
   gender: { type: String, enum: ['male', 'female'], default: 'male' },
   avatar: {

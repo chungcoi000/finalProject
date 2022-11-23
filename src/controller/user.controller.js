@@ -2,13 +2,17 @@ const UserModel = require('../model/user.model');
 const RoleModel = require("../model/role.model");
 const ClassModel = require("../model/class.model");
 const UnitModel = require("../model/unit.model");
+const bcrypt = require("bcrypt");
 
 const getTeachers = async (req, res) => {
   try {
     let role = await RoleModel.findOne({ name: 'teacher' })
     let teacher = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
     let allTeachers = await UserModel.find({ role: role.id })
-    let total = Math.ceil(allTeachers.length / teacher.length);
+    let total = 0;
+    if (Math.ceil(allTeachers.length / 10) === null) {
+      total = Math.ceil(allTeachers.length / 10);
+    }
     let nextPage, prePage;
     let page = req.query.page;
     if (req.query.page >= total && req.query.page <= total) {
@@ -24,7 +28,7 @@ const getTeachers = async (req, res) => {
       nextPage = true
       prePage = true
     }
-    let data = [nextPage, prePage, total, page]
+    let data = {nextPage: nextPage, prePage: prePage, total: allTeachers.length, page: page}
     if (!teacher) {
       res.json('khong co user ton tai')
     } else {
@@ -40,8 +44,11 @@ async function getStudents(req, res) {
   try {
     let role = await RoleModel.findOne({ name: 'student' })
     let Students = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
-    let allStudents = await UserModel.find({ role: role.id })
-    let total = Math.ceil(allStudents.length / Students.length);
+    let allStudents = await UserModel.find({ role: role.id });
+    let total = 0;
+    if (Math.ceil(allStudents.length / 10) > 0) {
+      total = Math.ceil(allStudents.length / 10);
+    }
     let nextPage, prePage
     let page = req.query.page
     if (req.query.page >= total && req.query.page <= total) {
@@ -57,12 +64,8 @@ async function getStudents(req, res) {
       nextPage = true
       prePage = true
     }
-    let data = [nextPage, prePage, total, page]
-    if (!Students) {
-      res.json('khong co user ton tai')
-    } else {
-      res.json({ status: 200, data: Students, pagination: data })
-    }
+    let data = {nextPage: nextPage, prePage: prePage, total: allStudents.length, page: page}
+    res.json({ status: 200, data: Students, pagination: data })
   } catch (e) {
     console.log(e);
   }
@@ -73,7 +76,10 @@ async function viewParents(req, res) {
     let role = await RoleModel.findOne({ name: 'parent' });
     let Parents = await UserModel.find({ role: role.id }).skip(req.query.limit * (req.query.page - 1)).limit(req.query.limit);
     let allParents = await UserModel.find({ role: role.id })
-    let total = Math.ceil(allParents.length / Parents.length);
+    let total = 0;
+    if (Math.ceil(allParents.length / 10) > 0) {
+      total = Math.ceil(allParents.length / 10);
+    }
     let nextPage, prePage;
     let page = req.query.page
     if (req.query.page >= total && req.query.page <= total) {
@@ -89,12 +95,8 @@ async function viewParents(req, res) {
       nextPage = true
       prePage = true
     }
-    let data = [nextPage, prePage, total, page]
-    if (!Parents) {
-      res.json('No user are existed');
-    } else {
-      res.json({ status: 200, data: Parents, pagination: data });
-    }
+    let data = {nextPage: nextPage, prePage: prePage, total: allParents.length, page: page}
+    res.json({ status: 200, data: Parents, pagination: data });
   } catch (e) {
     console.log(e);
   }
@@ -104,42 +106,56 @@ const addUser = async (req, res) => {
   try {
     let user = await UserModel.findOne({ email: req.body.email })
     let role = await RoleModel.findOne({ name: req.body.role })
+    const password = await bcrypt.hash(req.body.password, 8);
     if (user) {
       res.json({ status: 400, message: 'email is already used!' })
     } else {
       if (role.name === 'teacher') {
         let newUser = await UserModel.create({
+          email: req.body.email,
+          password: password,
           name: req.body.name,
           dob: req.body.dob,
           role: 'teacher',
           class: req.body.class,
-          phone: req.body.phone,
           subject: req.body.subject,
+          phone: req.body.phone,
+          identityNumber: req.body.identityNumber,
+          address: req.body.address,
           gender: req.body.gender,
         })
-      } else if (role.name = 'student') {
+        res.json({ status: 200, message: 'Create user successful', data: newUser })
+      } else if (role.name === 'student') {
         let newUser = await UserModel.create({
+          email: req.body.email,
+          password: password,
           name: req.body.name,
           dob: req.body.dob,
           role: 'student',
-          // class: req.body.class,
-          phone: req.body.phone,
           subject: req.body.subject,
           gender: req.body.gender,
+          phone: req.body.phone,
+          identityNumber: req.body.identityNumber,
+          address: req.body.address,
           unit: req.body.unit
         })
+        res.json({ status: 200, message: 'Create user successful', data: newUser })
       } else {
         let newUser = await UserModel.create({
           name: req.body.name,
           dob: req.body.dob,
+          email: req.body.email,
+          password: password,
           role: 'parent',
-          // child: req.body.child,
-          phone: req.body.phone,
+          child: req.body.child,
           subject: req.body.subject,
           gender: req.body.gender,
+          phone: req.body.phone,
+          identityNumber: req.body.identityNumber,
+          address: req.body.address,
         })
+        res.json({ status: 200, message: 'Create user successful', data: newUser })
       }
-      res.json({ status: 200, message: 'Create user successful', data: newUser })
     }
   } catch (e) {
     console.log(e);
@@ -232,33 +248,37 @@ const updateUser = async (req, res) => {
       let role = await RoleModel.findOne({ id: User.role })
       if (role.name === 'teacher') {
         let updateUser1 = await UserModel.updateOne({
+          name: req.body.name,
+          gender: req.body.gender,
+          identityNumber: req.body.identityNumber,
+          address: req.body.address,
           phone: req.body.phone,
           class: req.body.class,
         })
+        res.json({ status: 200, data: updateUser1, message: "Update teacher successful" })
       } else if (role.name === 'student') {
         let updateUser1 = await UserModel.updateOne({
           name: req.body.name,
           dob: req.body.dob,
-          // role: req.body.role,
-          class: req.body.class,
+          identityNumber: req.body.identityNumber,
+          address: req.body.address,
           phone: req.body.phone,
-          // subject: req.body.subject,
           gender: req.body.gender
         })
+        res.json({ status: 200, data: updateUser1, message: "Update teacher successful" })
+
       } else {
         let updateUser1 = await UserModel.create({
           name: req.body.name,
           dob: req.body.dob,
-          // role: req.body.role,
           child: req.body.child,
           phone: req.body.phone,
-          // subject: req.body.subject,
           gender: req.body.gender,
         })
+        res.json({ status: 200, data: updateUser1, message: "Update teacher successful" })
       }
-      res.json({ status: 200, data: updateUser1, message: "Update teacher successful" })
     } else {
-      res.json({ status: 404, message: "Teacher not found" });
+      res.json({ status: 404, message: "User not found" });
     }
   } catch (e) {
     console.log(e);

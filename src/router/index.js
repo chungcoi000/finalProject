@@ -8,7 +8,10 @@ const classRouter = require("./class.route")
 router.use('/class', classRouter)
 
 const unitRouter = require("./unit.route")
-router.use('/users', unitRouter)
+router.use('/units', unitRouter)
+
+const userRouter = require("./user.route")
+router.use('/users', userRouter)
 
 const class_slotRouter = require("./class-slot.route")
 router.use('/class-slots', class_slotRouter)

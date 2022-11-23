@@ -51,12 +51,13 @@ module.exports.checkRoleParent = async (req, res, next) => {
 }
 
 module.exports.checkToken = async (req, res, next) => {
+    console.log(req.cookies.user);
     let searchTokenUser
     try {
         let token = req.cookies.user
         searchTokenUser = await UserModel.findOne(
             { token: token }
-        ).populate('role')
+        )
         if (searchTokenUser) {
             let id = jwt.verify(token, 'token')
             if (id) {

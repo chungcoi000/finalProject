@@ -24,7 +24,7 @@ async function login(req, res) {
         res.cookie("user", token, {
           expires: new Date(Date.now() + 9000000),
         });
-        res.json({ data: data });
+        res.json({ data: data, token: token });
       } else {
         res.json({ message: " Incorrect password" });
       }

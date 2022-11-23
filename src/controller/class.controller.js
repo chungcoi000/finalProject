@@ -23,7 +23,7 @@ const addClass = async (req, res) => {
                 name: req.body.name,
                 unit: req.body.unit,
                 student: req.body.student,
-                fromTeacher: req.body.fromTeacher,
+                formTeacher: req.body.formTeacher,
                 slug: slug(req.body.name)
             })
             res.json({ status: 200, message: 'Created class successful', data: Class })

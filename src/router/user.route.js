@@ -17,8 +17,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get('/getParents', auth.checkToken, viewParents)
-router.post('/getTeachers', auth.checkToken, getTeachers)
-router.post('/getStudents', auth.checkToken, getStudents)
+router.get('/getTeachers', auth.checkToken, getTeachers)
+router.get('/getStudents', auth.checkToken, getStudents)
 router.post('/add', auth.checkToken, addUser)
 router.get('/:id', auth.checkToken, getUser)
 router.post('/update/:id', auth.checkToken, updateUser)
