@@ -35,6 +35,9 @@ router.use('/subjects', subjectRouter)
 const slotRouter = require("./slot.route")
 router.use('/slots', slotRouter)
 
+const dateRouter = require("./date.route")
+router.use('/dates', dateRouter)
+
 const PostRouter = require("./post.route")
 router.use('/posts', PostRouter)
 module.exports = router;

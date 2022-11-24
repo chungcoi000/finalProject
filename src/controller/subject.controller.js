@@ -31,11 +31,9 @@ async function viewSubjects(req, res) {
       nextPage = false
       prePage = false
     } else if (req.query.page >= totalPage) {
-      console.log(totalPage);
       nextPage = false
       prePage = true
     } else if (req.query.page <= totalPage) {
-      console.log(totalPage);
       nextPage = true
       prePage = false
     } else {
@@ -64,34 +62,21 @@ async function getAllSubjects(req, res) {
   }
 }
 
-async function updateSubject(req, res) {
-  try {
-    let subject = await SubjectModel.findOne({slug: req.params.slug});
-    if (subject) {
-      res.json({status: 200, message: "Update subject successful", subject: subject})
-    } else {
-      res.json({status: 404, message: 'Not Found'})
-    }
-  } catch (e) {
-    res.json(e);
-    console.log(e);
-  }
-}
 
 async function deleteSubject(req, res) {
   try {
-    let subject = await SubjectModel.findOne({slug: req.params.slug})
+    let subject = await SubjectModel.findOne({_id: req.params.id})
     if (subject) {
-      let subjectDelete = await SubjectModel.deleteOne({slug: subject.slug});
-      res.json({status: 200, message: "Delete subject successful", subject: subjectDelete});
+      let subjectDelete = await SubjectModel.findOneAndDelete({_id: subject._id});
+      res.json({status: 200, message: "Delete subject successful", data: subjectDelete});
     } else {
-      res.json({status: 404, message: 'Not Found'});
+      res.json({status: 404, message: 'Subject Not Found'});
     }
   } catch (e) {
     res.json(e);
-    console.log(e);
+    res.json({status: 404, message: "Something error"});
   }
 }
 
 
-module.exports = {deleteSubject, updateSubject, viewSubjects, createSubject, getAllSubjects}
+module.exports = {deleteSubject, viewSubjects, createSubject, getAllSubjects}

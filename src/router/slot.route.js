@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const auth = require('../middleware/auth')
-const { createSlot } = require('../controller/slot.controller')
+const { createSlot, getSlots} = require('../controller/slot.controller')
 
-router.get('/createSlot', auth.checkToken, createSlot);
+router.post('/createSlot', auth.checkToken, createSlot);
+router.get('/', auth.checkToken, getSlots);
 
 module.exports = router

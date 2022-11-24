@@ -13,7 +13,6 @@ async function createTimeTable(req, res) {
     } else {
       await timetableModel.create({
         name: req.body.name,
-        dateID: req.body.dateID,
         class_slotID: req.body.class_slotID,
         slug: slug(req.body.name)
       })

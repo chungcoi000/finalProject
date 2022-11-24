@@ -2,9 +2,9 @@ const mongoose = require('./connectDB');
 
 const ClassSchema = mongoose.Schema({
   name: String,
-  unitID: { type: String, ref: 'unit' },
-  formTeacher: [{ type: String, ref: 'user' }],
-  student: [{ type: String, ref: 'student' }],
+  unit: { type: String, ref: 'unit' },
+  formTeacher: { type: String, ref: 'user' },
+  student: [{ type: String, ref: 'user' }],
   slug: String,
 }, { collection: 'class', timestamps: true })
 
