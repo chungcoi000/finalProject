@@ -6,7 +6,6 @@ const RoleModel = require("../model/role.model");
 // login
 async function login(req, res) {
   try {
-    // console.log(req.body.href);
     const data = await UserModel.findOne({
       email: req.body.email,
     });
@@ -18,18 +17,18 @@ async function login(req, res) {
       if (checkPassword) {
         const token = jwt.sign(`${data._id}`, "token");
         await UserModel.updateOne(
-          { _id: data._id },
-          { token: token }
+          {_id: data._id},
+          {token: token}
         );
         res.cookie("user", token, {
           expires: new Date(Date.now() + 9000000),
         });
-        res.json({ data: data, token: token });
+        res.json({status: 200, data: data, message: "Login success"});
       } else {
-        res.json({ message: " Incorrect password" });
+        res.json({status: 404, message: "Incorrect password"});
       }
     } else {
-      res.json({ message: "Login failed", status: 400, err: false });
+      res.json({message: "Incorrect email", status: 400});
     }
   } catch (err) {
     res.json(76, err);
@@ -40,7 +39,7 @@ async function login(req, res) {
 // register
 async function register(req, res) {
   try {
-    let user = await UserModel.findOne({ email: req.body.email })
+    let user = await UserModel.findOne({email: req.body.email})
     if (user) {
       res.json({
         status: 400,
@@ -82,4 +81,4 @@ const logout = async (req, res) => {
   }
 }
 
-module.exports = { login, register, logout }
+module.exports = {login, register, logout}

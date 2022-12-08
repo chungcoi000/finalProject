@@ -3,7 +3,7 @@ const auth = require('../middleware/auth')
 const multer = require("multer");
 const {
   searchUser, viewParents, addUser, updateUser, getTeachers, getUser, deleteUser, getStudents, updateUserAvatar,
-  getUserByClass, getUserByUnit, getTeacherBySubject, getTeacherByClass
+  getUserByClass, getUserByUnit, getTeacherBySubject, getTeacherByClass, updatePassword
 } = require('../controller/user.controller')
 
 const storage = multer.diskStorage({
@@ -24,10 +24,11 @@ router.get('/getTeachers', auth.checkToken, getTeachers)
 router.get('/getStudents', auth.checkToken, getStudents)
 router.get('/getUserByClass/:id', auth.checkToken, getUserByClass)
 router.get('/getUserByUnit/:id', auth.checkToken, getUserByUnit)
-router.get('/getTeacherBySubject', auth.checkToken, getTeacherBySubject)
+router.get('/getTeacherBySubject/:id', auth.checkToken, getTeacherBySubject)
 router.get('/getTeacherByClass', auth.checkToken, getTeacherByClass)
 router.get('/search', auth.checkToken, searchUser)
 router.post('/add', auth.checkToken, addUser)
+router.post("/updatePassword", auth.checkToken, updatePassword);
 router.get('/:id', auth.checkToken, getUser)
 router.post('/update/:id', auth.checkToken, updateUser)
 router.delete('/delete/:id', auth.checkToken, deleteUser)

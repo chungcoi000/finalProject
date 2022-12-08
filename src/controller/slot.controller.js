@@ -8,7 +8,6 @@ const createSlot = async (req, res) => {
     if (Slot) {
       res.json({status: 200, Message: 'name slot already'})
     } else {
-
       let slot = await SlotModel.create({
         slot: req.body.slot,
         startDate: req.body.startDate,

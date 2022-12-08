@@ -161,7 +161,7 @@ const addUser = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    let User = await UserModel.findOne({_id: req.params.id}).populate("unit").populate("subject");
+    let User = await UserModel.findOne({_id: req.params.id}).populate("unit").populate("subject").populate("child");
     res.json({status: 200, data: User});
   } catch (e) {
     console.log(e);
@@ -212,6 +212,32 @@ const updateUser = async (req, res) => {
   } catch (e) {
     console.log(e);
     res.json({status: 404, message: "Update user failed!"});
+  }
+}
+
+const updatePassword = async (req, res) => {
+  try {
+    let token = req.cookies;
+    let user = await UserModel.findOne({token: token.user});
+    if (!user) {
+      res.json({status: 404, message: 'User not found'})
+    }
+    const checkPassword = await bcrypt.compare(
+      req.body.currentPassword,
+      user.password
+    );
+
+    if (!checkPassword) {
+      res.json({status: 400, message: "Current password is not match with saved password!"});
+    }
+    const password = await bcrypt.hash(req.body.password, 8);
+    const newPassword = await UserModel.findOneAndUpdate({_id: user._id}, {
+      password: password
+    })
+
+    res.json({status: 200, message: "Update password successful!", data: newPassword});
+  } catch (e) {
+    console.log(e);
   }
 }
 
@@ -305,7 +331,7 @@ async function getUserByUnit(req, res) {
 
 async function getTeacherBySubject(req, res) {
   try {
-    let teachers = await UserModel.find({subject: req.params.id})
+    let teachers = await UserModel.find({subject: req.params.id}).populate("subject");
     res.json({status: 200, data: teachers})
   } catch (e) {
     res.json(e)
@@ -352,5 +378,6 @@ module.exports = {
   getUserByClass,
   getUserByUnit,
   getTeacherBySubject,
-  getTeacherByClass
+  getTeacherByClass,
+  updatePassword
 }

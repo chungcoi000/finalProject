@@ -5,14 +5,14 @@ const {
   updateClassSlot,
   viewClassSlots,
   createClassSlot,
-  viewClassSlot, slotStudent
+  viewClassSlot, slotStudent,
 } = require('../controller/class-slot.controller')
 
-router.get('/', auth.checkToken, viewClassSlots)
+router.get('/', auth.checkToken, viewClassSlots);
 router.post('/add', auth.checkToken, createClassSlot)
-router.get('/:slug', auth.checkToken, viewClassSlot)
-router.post('/update/:slug', auth.checkToken, updateClassSlot)
-router.delete('/delete/:slug', auth.checkToken, deleteClassSlot)
+router.get('/:id', auth.checkToken, viewClassSlot)
+router.post('/update/:id', auth.checkToken, updateClassSlot)
+router.delete('/delete/:id', auth.checkToken, deleteClassSlot)
 router.get('/slot-student', auth.checkToken, slotStudent)
 
 module.exports = router

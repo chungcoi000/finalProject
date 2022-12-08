@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const auth = require('../middleware/auth')
-const { deleteClass, getClass, getClasses, addClass, updateClass, getClassByUnit, updateStudentToClass} = require('../controller/class.controller')
+const { deleteClass, getClass, getClasses, addClass, updateClass, getClassByUnit, updateStudentToClass, getUserClass} = require('../controller/class.controller')
 
 router.get('/', auth.checkToken, getClasses);
+router.get('/getClass', auth.checkToken, getUserClass);
 router.post('/add', auth.checkToken, addClass);
 router.get('/:id', auth.checkToken, getClass);
 router.post('/update/:id', auth.checkToken, updateClass);

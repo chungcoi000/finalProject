@@ -17,11 +17,10 @@ const class_slotRouter = require("./class-slot.route")
 router.use('/class-slots', class_slotRouter)
 
 const ProfileRouter = require("./profile.route")
-router.use('/profiles', ProfileRouter)
+router.use('/profile', ProfileRouter)
 
 const timeTableRouter = require("./timetable.route")
 router.use('/timetable', timeTableRouter)
-
 
 const authRouter = require("./auth.route")
 router.use('/auth', authRouter)

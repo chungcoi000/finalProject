@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
+app.use(cors({credentials: true, origin: "http://localhost:3001"}));
 app.options('*', cors());
 
 app.use("/public", express.static(path.join(__dirname, "public")));

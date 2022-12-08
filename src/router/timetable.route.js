@@ -1,15 +1,13 @@
 const router = require('express').Router();
 const auth = require('../middleware/auth')
 const {
-    createTimeTable,
-    timeTableStudent,
-    timeTableTeacher,
-    timeTableTeacherH
+  createTimeTable,
+  timeTableTeacher,
+  timeTableClass
 } = require('../controller/timetable.controller')
 
-router.post('/create-timetable', auth.checkToken, createTimeTable)
-router.get('/student-timetable', auth.checkToken, timeTableStudent)
-router.get('/form-teacher-timetable', auth.checkToken, timeTableTeacherH)
-router.get('/teacher-timetable', auth.checkToken, timeTableTeacher)
+router.get('/:id', auth.checkToken, timeTableClass)
+router.post('/add', auth.checkToken, createTimeTable)
+router.get('/get/teacher-timetable', auth.checkToken, timeTableTeacher)
 
 module.exports = router

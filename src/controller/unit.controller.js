@@ -20,7 +20,7 @@ async function createUnit(req, res) {
         name: req.body.name,
         slug: slug(req.body.name)
       })
-      res.json({ status: 200, message: 'Create unit successful', data: Student })
+      res.json({ status: 200, message: 'Create unit successful', data: unit })
     }
   } catch (e) {
     console.log(e);

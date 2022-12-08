@@ -1,9 +1,8 @@
-const mongoose = require('./connectDB')
+const mongoose = require('./connectDB');
 
 const timetableSchema = mongoose.Schema({
-  name: String,
-  class_slotID: [{type: String, ref: 'class_slot'}],
-  slug: String,
+  dateID: {type: String, ref: 'date'},
+  class_slotID: {type: String, ref: 'class_slot'},
 }, {collection: 'timetable', timestamps: true})
 
 const timetableModel = mongoose.model('timetable', timetableSchema);
