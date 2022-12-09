@@ -9,9 +9,7 @@ const takeAttendance = async (req, res) => {
       let attendance = await attendanceModel.findOneAndUpdate({
         class_slot: req.body.class_slot,
       }, {
-        $addToSet: {
-          attendances: req.body.attendances,
-        },
+        attendances: req.body.attendances,
         class_slot: req.body.class_slot,
         classID: req.body.classID
       }, {

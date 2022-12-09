@@ -5,7 +5,7 @@ const ClassModel = require("../model/class.model");
 
 async function createClassSlot(req, res) {
   try {
-    let currentClassSlot = await Class_slotModel.findOne({teacherID: req.body.teacherID, slotID: req.body.slotID});
+    let currentClassSlot = await Class_slotModel.findOne({teacherID: req.body.teacherID, slotID: req.body.slotID, name: req.body.name});
     if (currentClassSlot) return res.json({status: 400, message: "Teacher is already in a class slot"});
 
     let classSlot = await Class_slotModel.findOne({classID: req.body.classID, slotID: req.body.slotID, name: req.body.name});
