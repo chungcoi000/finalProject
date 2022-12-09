@@ -281,15 +281,16 @@ const searchUser = async (req, res) => {
 
 const updateUserAvatar = async (req, res) => {
   try {
-    let userInfo = await UserModel.findOne({token: req.cookies.user})
+    let userInfo = await UserModel.findOne({_id: req.body.user})
     let path
     if (req.file == undefined) {
       path = userInfo.avatar
     } else {
-      path = req.file.path;
+      path = `/uploads/${req.file.filename}`;
     }
-    let user = await UserModel.findByIdAndUpdate({_id: userInfo.id}, {avatar: path})
-    res.json({status: 200, data: user, message: "Upload avatar successful"});
+    let user = await UserModel.findByIdAndUpdate({_id: req.body.user}, {avatar: path});
+    const newUser = await UserModel.findOne({_id: user._id});
+    res.json({status: 200, data: newUser, message: "Upload avatar successful"});
   } catch (error) {
     res.status(500).json(error)
   }

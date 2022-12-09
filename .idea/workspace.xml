@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37154dea-f602-44a5-bd30-48e73add3167" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/src/controller/attendance.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/attendance.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/class-slot.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/class-slot.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/user.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/user.controller.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +75,7 @@
       <workItem from="1669685148127" duration="1156000" />
       <workItem from="1669807948847" duration="1434000" />
       <workItem from="1670494954290" duration="12986000" />
-      <workItem from="1670549933431" duration="2406000" />
+      <workItem from="1670549933431" duration="6727000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1669111545989</created>
@@ -126,7 +126,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670527915029</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="update">
+      <created>1670552628410</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670552628410</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
